@@ -1,0 +1,54 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <h1>Edit Landlord</h1>
+
+    <form action="/landlords/<%=landlord._id%>?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" value="<%= landlord.name%>">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number </label>
+            <input type="tel" class="form-control" name="phone" value="<%= landlord.phone%>"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" name="email" value="<%= landlord.email%>"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        </div>
+        <div class="form-group">
+            <label for="business">Business</label>
+            <input type="text" class="form-control" name="business" value="<%= landlord.business%>">
+        </div>
+        <div class="form-group">
+            <label for="type">Landlord Type</label>
+            <!-- use drop down -->
+            <select class="form-control" name="type" id="type">
+                <!-- find which one is selected -->
+                <option disabled> -- Choose Below -- </option>
+                <option <%= landlord.type === 'apartment' ? 'selected' : ''%>>Apartments</option>
+                <option <%= landlord.type === 'houses' ? 'selected' : ''%>>Houses</option>
+                <option <%= landlord.type === 'rooms' ? 'selected' : ''%>>Rooms</option>
+            </select>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" name="owner" <%= landlord.owner ? 'checked' : ''%>>
+            <label class="form-check-label" class="owner">Is this the owner?</label>
+        </div>
+        <div class="form-group">
+            <label for="img">Image</label>
+            <input type="url" class="form-control form" name="img" value="<%= landlord.img%>">
+        </div>
+        <div class="form-group">
+            <label for="img_description">Image Description</label>
+            <input type="text" class="form-control" name="img_description" value="<%= landlord.img_description%>">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+<%- include("partials/footer") %>

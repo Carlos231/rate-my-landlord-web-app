@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+
+<div class="container">
+    <h1>Edit Comment</h1>
+    <form action="/landlords/<%= landlord_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="text">Comment Text</label>
+            <textarea class="form-control" name="text" id="text" cols="80" rows="8" placeholder="Comment text here..."
+                required><%=comment.text%></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</div>
+
+<%- include('partials/footer') %>

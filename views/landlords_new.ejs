@@ -1,0 +1,66 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <h1>Add New Landlord</h1>
+
+    <form action="/landlords" method="POST">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" placeholder="e.g. Bob" autofocus required>
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number </label>
+            <input type="tel" class="form-control" name="phone" placeholder="555-555-5555"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" name="email" placeholder="Bobs@Burgers.com"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+        </div>
+        <div class="form-group">
+            <label for="business">Business</label>
+            <input type="text" class="form-control" name="business" placeholder="Bobs Burgers" required>
+        </div>
+        <div class="form-group">
+            <label for="type">Landlord Type</label>
+            <!-- use drop down -->
+            <select class="form-control" name="type" id="type">
+                <option disabled selected> -- Choose Below -- </option>
+                <option>Apartments</option>
+                <option>Houses</option>
+                <option>Rooms</option>
+            </select>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" name="owner">
+            <label class="form-check-label" class=for="owner">Is this the owner?</label>
+        </div>
+        <div class="form-group">
+            <label for="img">Image</label>
+            <input type="url" class="form-control form" name="img" placeholder="https://www.myimage.com" required>
+        </div>
+        <div class="form-group">
+            <label for="img_description">Image Description</label>
+            <input type="text" class="form-control" name="img_description" placeholder="Description" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+
+<!-- <form action="/landlords" method="POST">
+    <label for="name">Name</label>
+    <input type="text" name="name" autofocus>
+    <label for="business">Business</label>
+    <input type="text" name="business">
+    <label for="img">Image</label>
+    <input type="text" name="img">
+    <br>
+    <br>
+    <button type="submit">Submit</button>
+</form> -->
+
+<%- include("partials/footer") %>
