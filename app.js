@@ -54,7 +54,7 @@ const {
 const {
     appendFile
 } = require('fs');
-mongoose.connect(config.db.connection, {
+mongoose.connect(config.db.connection || process.env.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
