@@ -13,7 +13,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const expressSession = require('express-session');
 
 // Config Import
-const config = require('./config');
+// const config = require('./config');
 const PORT = process.env.PORT || 3000;
 
 // Route Imports
@@ -54,7 +54,7 @@ const {
 const {
     appendFile
 } = require('fs');
-mongoose.connect(config.db.connection || process.env.MONGODB, {
+mongoose.connect(process.env.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
