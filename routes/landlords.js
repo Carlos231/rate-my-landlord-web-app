@@ -49,11 +49,14 @@ router.post("/", isLoggedIn, async (req, res) => {
     try {
         // redirect to new landlord created
         const landlord = await Landlord.create(newLandlord);
-        console.log(landlord);
+        // console.log(landlord);
+        req.flash("success", "Landlord created!");
         res.redirect("/landlords/" + landlord._id);
     } catch (err) {
         console.log(err);
-        res.send("you broke it... /landlords/index POST");
+        req.flash("error", "Error creating landlord");
+        // res.send("you broke it... /landlords/index POST");
+        res.redirect("/landlords");
     }
 })
 
@@ -186,10 +189,14 @@ router.put("/:id", checkLandlordOwner, async (req, res) => {
             // see object after is updates (3rd param)
             new: true
         }).exec();
+        req.flash("success", "Landlord updated!");
         res.redirect(`/landlords/${req.params.id}`);
     } catch (err) {
         console.log(err);
-        res.send("You broke it... /landlords/:id PUT");
+        req.flash("error", "Error updating Landlord!");
+        // res.send("You broke it... /landlords/:id PUT");
+        res.redirect("/landlords");
+
     }
 
 })
@@ -198,10 +205,13 @@ router.put("/:id", checkLandlordOwner, async (req, res) => {
 router.delete("/:id", checkLandlordOwner, async (req, res) => {
     try {
         const deletedLandlord = await Landlord.findByIdAndDelete(req.params.id).exec();
+        req.flash("success", "Landlord deleted!");
         res.redirect("/landlords");
     } catch (err) {
         console.log(err);
-        res.send("You broke it... /landlords/:id DELETE");
+        req.flash("error", "Error deleting landlord!");
+        // res.send("You broke it... /landlords/:id DELETE");
+        req.redirect("back");
     }
 })
 

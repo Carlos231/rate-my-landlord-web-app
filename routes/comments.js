@@ -35,11 +35,14 @@ router.post("/", isLoggedIn, async (req, res) => {
             text: req.body.text,
             landlordId: req.body.landlordId
         });
-        console.log(newComment);
+        // console.log(newComment);
+        req.flash("success", "Comment created!");
         res.redirect(`/landlords/${req.body.landlordId}`);
     } catch (err) {
         console.log(err);
-        res.send("You broke it... /landlords/:id/comments POST")
+        req.flash("error", "Error creating comment!");
+        // res.send("You broke it... /landlords/:id/comments POST")
+        req.redirect("/landlords");
     }
 })
 
@@ -56,7 +59,7 @@ router.get("/:commentId/edit", checkCommentOwner, async (req, res) => {
         });
     } catch (err) {
         console.log(err);
-        res.send("Broken... /comments EDIT");
+        // res.send("Broken... /comments EDIT");
     }
 })
 
@@ -68,10 +71,14 @@ router.put("/:commentId", checkCommentOwner, async (req, res) => {
         }, {
             new: true
         });
+        req.flash("success", "Comment edited!");
         res.redirect(`/landlords/${req.params.id}`);
     } catch (err) {
         console.log(err);
-        res.send("Broken... /comments UPDATE");
+        req.flash("error", "Error editing comment!");
+        // res.send("Broken... /comments UPDATE");
+        res.redirect("/landlords");
+
     }
 })
 
@@ -79,10 +86,13 @@ router.put("/:commentId", checkCommentOwner, async (req, res) => {
 router.delete("/:commentId", checkCommentOwner, async (req, res) => {
     try {
         const comment = await Comment.findByIdAndDelete(req.params.commentId);
+        req.flash("success", "Comment deleted!");
         res.redirect(`/landlords/${req.params.id}`);
     } catch (err) {
         console.log(err);
-        res.send("Broken.. /comments DELETE");
+        req.flash("error", "Error deleting comment!");
+        // res.send("Broken.. /comments DELETE");
+        res.redirect("/landlords");
     }
 })
 

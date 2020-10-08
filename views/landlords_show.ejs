@@ -56,7 +56,7 @@
         <div class="col-2 border-right my-auto">
             <%= comment.user.username %>
         </div>
-        <% if (user && user.username === comment.owner.username) { %>
+        <% if (user && user.username === comment.user.username) { %>
         <div class="col-2 border-right my-auto d-flex flex-wrap justify-content-center">
             <a class="btn btn-sm btn-success w-75 p-0 my-1"
                 href="/landlords/<%=landlord._id%>/comments/<%=comment._id%>/edit">Edit</a>
