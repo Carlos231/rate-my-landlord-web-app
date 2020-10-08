@@ -5,6 +5,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
@@ -83,6 +84,9 @@ app.use(expressSession({
 // Method Override Config
 app.use(methodOverride('_method'));
 
+// Connect flash
+app.use(flash());
+
 // Passport Config
 app.use(passport.initialize());
 app.use(passport.session()); // Allow persistent sessions
@@ -136,11 +140,13 @@ passport.use(new LocalStrategy(User.authenticate())); // Use the local strategy
 //     }
 // ];
 
-// Current User Middleware Config
+// State Config
 app.use((req, res, next) => {
     // value on response object we can add key value pairs to
     // will make it available to all routes
     res.locals.user = req.user;
+    res.locals.errorMessage = req.flash("error");
+    res.locals.successMessage = req.flash("success");
     next();
 })
 

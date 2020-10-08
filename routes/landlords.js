@@ -87,6 +87,18 @@ router.get("/search", async (req, res) => {
     }
 })
 
+// Landlord Types
+router.get("/type/:type", async (req, res) => {
+    // check if type is valid
+    const validTypes = ["apartments", "houses", "rooms"]; // if bigger application would pull this from a config file to edit easier
+    if (validTypes.includes(req.params.type.toLocaleLowerCase())) {
+        const landlords = await Landlord.find({ type: req.params.type }).exec();
+        res.render("landlords", { landlords });
+    } else {
+        res.send("Please enter a valid type.");
+    }
+})
+
 // Show 
 router.get("/:id", async (req, res) => {
     try {
