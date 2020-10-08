@@ -13,7 +13,13 @@ const LocalStrategy = require('passport-local').Strategy;
 const expressSession = require('express-session');
 
 // Config Import
-// const config = require('./config');
+try {
+    var config = require('./config');
+} catch (error) {
+    console.log("Could not import config. Not working locally");
+    console.log(error);
+}
+
 const PORT = process.env.PORT || 3000;
 
 // Route Imports
@@ -45,20 +51,23 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Mongoose Config Connect to DB
-const {
-    url
-} = require('inspector');
-const {
-    compileFunction
-} = require('vm');
-const {
-    appendFile
-} = require('fs');
-mongoose.connect(process.env.MONGODB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-});
+try {
+    // if working locally
+    mongoose.connect(config.db.connection, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+    });
+} catch (error) {
+    // for deployment
+    console.log("Could not connect using config. Not working locally.");
+    mongoose.connect(process.env.MONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+    });
+}
+
 
 // Express Config
 app.set('view engine', 'ejs');
@@ -66,7 +75,7 @@ app.use(express.static('public'));
 
 // Express Session Config
 app.use(expressSession({
-    secret: 'asdflkadASKJDHailasdflakjfdnasdflknsdf',
+    secret: process.env.ES_SECRET || config.expressSession.secret,
     resave: false,
     saveUninitialized: false
 }));

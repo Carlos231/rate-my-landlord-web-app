@@ -4,7 +4,8 @@
   "description": "An API for users to rate their landlords and locations.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "author": "Carlos Lopez-Molina",
   "license": "ISC",
