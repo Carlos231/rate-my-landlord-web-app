@@ -1,79 +1,92 @@
 <%- include('partials/header') %>
 
-<div class="container">
-    <div class="row mt-4">
-        <!-- take half the page -->
-        <div class="col-6 show_image-container">
-            <!-- set size of image with the image-container class in css -->
-            <img src="<%= landlord.img %>" alt="<%= landlord.img_description %>">
-        </div>
-        <div class="col6 show_details-container">
-            <h1><%=landlord.name%></h1>
-            <p> Business: <%= landlord.business %></p>
-            <p> Phone: <%= landlord.phone %></p>
-            <p> Email: <%= landlord.email %></p>
-            <p> Business Type: <%= landlord.type %></p>
-            <p> Owner?: <%= landlord.owner === 'false' ? 'No' : 'Yes' %></p>
+    <div class="container">
+        <div class="row mt-4">
+            <!-- take half the page -->
+            <div class="col-6 show_image-container">
+                <!-- set size of image with the image-container class in css -->
+                <img src="<%= landlord.img %>" alt="<%= landlord.img_description %>">
+            </div>
+            <div class="col6 show_details-container">
+                <h1>
+                    <%=landlord.name%>
+                </h1>
+                <p> Business: <%= landlord.business %>
+                </p>
+                <p> Phone: <%= landlord.phone %>
+                </p>
+                <p> Email: <%= landlord.email %>
+                </p>
+                <p> Business Type: <%= landlord.type %>
+                </p>
+                <p> Owner?: <%= landlord.owner==='false' ? 'No' : 'Yes' %>
+                </p>
 
-            <table class="table">
-                <h2>Reviews:</h2>
-                <% if (landlord.reviews.length > 0 ){ %>
+                <table class="table">
+                    <h3>Top Reviews:</h3>
+                    <% if (landlord.reviews.length> 0 ){ %>
 
-                <tbody>
-                    <%for (let i = 0; i < landlord.reviews.length; i++){ %>
-                    <tr>
-                        <th scope="row"><%=i%></th>
-                        <td><%= landlord.reviews[i].name %></td>
-                        <td>"<%= landlord.reviews[i].content %>"</td>
-                    </tr>
-                    <% } 
-                    } else { %>
-                    <tr>
-                        <th scope="row"></th>
-                        <td>No reviews yet</td>
-                    </tr>
+                        <tbody>
+                            <%for (let i=0; i < landlord.reviews.length; i++){ %>
+                                <tr>
+                                    <th scope="row">
+                                        <%=i%>
+                                    </th>
+                                    <td>
+                                        <%= landlord.reviews[i].name %>
+                                    </td>
+                                    <td>"<%= landlord.reviews[i].content %>"</td>
+                                </tr>
+                                <% } } else { %>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td>No reviews yet</td>
+                                    </tr>
+                                    <% } %>
+                        </tbody>
+                </table>
+                <% if (user && user.username===landlord.owner.username) { %>
+                    <a href="/landlords/<%=landlord._id%>/edit">
+                        <button class="btn btn-outline-info btn-lg btn-block mb-2">Edit</button>
+                    </a>
+                    <form action="/landlords/<%=landlord._id%>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-outline-danger btn-lg btn-block">Delete</button>
+                    </form>
                     <% } %>
-                </tbody>
-            </table>
-            <% if (user && user.username === landlord.owner.username) { %>
-            <a href="/landlords/<%=landlord._id%>/edit">
-                <button class="btn btn-outline-info btn-lg btn-block mb-2">Edit</button>
-            </a>
-            <form action="/landlords/<%=landlord._id%>?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-outline-danger btn-lg btn-block">Delete</button>
-            </form>
-            <% } %>
+            </div>
         </div>
-    </div>
-    <div class="row show_comment-header mt-3">
-        <h2>Comments:</h2>
-    </div>
-    <a href="/landlords/<%=landlord._id%>/comments/new">
-        <button class="btn btn-success btn-lg mt-3 mb-4">Add Comment</button>
-    </a>
-    <% comments.forEach((comment => { %>
-    <div class="row show_comment-container py-2 border">
-        <div class="col-2 border-right my-auto">
-            <%= comment.user.username %>
+
+        <!-- Comments -->
+        <div class="row show_comment-header mt-3">
+            <h2>Comments:</h2>
         </div>
-        <% if (user && user.username === comment.user.username) { %>
-        <div class="col-2 border-right my-auto d-flex flex-wrap justify-content-center">
-            <a class="btn btn-sm btn-success w-75 p-0 my-1"
-                href="/landlords/<%=landlord._id%>/comments/<%=comment._id%>/edit">Edit</a>
-            <form class="w-75 my-1" action="/landlords/<%=landlord._id%>/comments/<%=comment._id%>?_method=DELETE"
-                method="POST">
-                <button class="btn btn-sm btn-danger w-100 p-0">Delete</button>
-            </form>
-        </div>
-        <% } %>
-        <div class="col-8 my-auto">
-            <%= comment.text %>
-        </div>
-    </div>
-    <% })); %>
-    <div class="py-5"></div>
+        <a href="/landlords/<%=landlord._id%>/comments/new">
+            <button class="btn btn-success btn-lg mt-3 mb-4">Add Comment</button>
+        </a>
+        <% comments.forEach((comment=> { %>
+            <div class="row show_comment-container py-2 border">
+                <div class="col-2 border-right my-auto">
+                    <%= comment.user.username %>
+                </div>
+                <% if (user && user.username===comment.user.username) { %>
+                    <div class="col-2 border-right my-auto d-flex flex-wrap justify-content-center">
+                        <a class="btn btn-sm btn-success w-75 p-0 my-1"
+                            href="/landlords/<%=landlord._id%>/comments/<%=comment._id%>/edit">Edit</a>
+                        <form class="w-75 my-1"
+                            action="/landlords/<%=landlord._id%>/comments/<%=comment._id%>?_method=DELETE"
+                            method="POST">
+                            <button class="btn btn-sm btn-danger w-100 p-0">Delete</button>
+                        </form>
+                    </div>
+                    <% } %>
+                        <div class="col-8 my-auto">
+                            <%= comment.text %>
+                        </div>
+            </div>
+            <% })); %>
+                <div class="py-5"></div>
 
 
-</div>
+    </div>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>

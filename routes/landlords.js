@@ -13,12 +13,13 @@ router.get("/", async (req, res) => {
     try {
         const landlords = await Landlord.find().exec();
         // pass in the user
-        res.render('landlords', {
+        res.status(200).render('landlords', {
             landlords: landlords
         });
     } catch (err) {
-        console.log(err);
-        res.send("you broke it... /landlords/index");
+        console.log('Broken.. /landlords/ GET', err);
+        req.flash('error', 'Error fetching landlords');
+        res.status(500).redirect('/');
     }
 })
 
@@ -51,22 +52,21 @@ router.post("/", isLoggedIn, async (req, res) => {
         const landlord = await Landlord.create(newLandlord);
         // console.log(landlord);
         req.flash("success", "Landlord created!");
-        res.redirect("/landlords/" + landlord._id);
+        res.status(201).redirect(`/landlords/${landlord._id}`);
     } catch (err) {
-        console.log(err);
+        console.log('Broken.. /landlords/index POST', err);
         req.flash("error", "Error creating landlord");
-        // res.send("you broke it... /landlords/index POST");
-        res.redirect("/landlords");
+        res.status(400).redirect("/landlords");
     }
 })
 
 // New
-router.get("/new", isLoggedIn, (req, res) => {
+router.get("/new", isLoggedIn, (req, res, next) => {
     try {
-        res.render("landlords_new");
-    } catch (error) {
-        console.log(err);
-        res.send("Broken... /landlords/new");
+        res.status(200).render("landlords_new");
+    } catch (err) {
+        console.log('Broken... /landlords/new', err);
+        next();
     }
 })
 
@@ -81,29 +81,30 @@ router.get("/search", async (req, res) => {
                 $search: req.query.term
             }
         });
-        res.render("landlords", {
+        res.status(200).render("landlords", {
             landlords
         });
     } catch (err) {
-        console.log(err);
-        res.send("Broken /search GET");
+        console.log('Broken /search GET', err);
+        res.status(400).redirect("/landlords");
     }
 })
 
 // Landlord Types
-router.get("/type/:type", async (req, res) => {
+router.get("/type/:type", async (req, res, next) => {
     // check if type is valid
     const validTypes = ["apartments", "houses", "rooms"]; // if bigger application would pull this from a config file to edit easier
     if (validTypes.includes(req.params.type.toLocaleLowerCase())) {
         const landlords = await Landlord.find({ type: req.params.type }).exec();
-        res.render("landlords", { landlords });
+        res.status(200).render("landlords", { landlords });
     } else {
-        res.send("Please enter a valid type.");
+        console.log('Broken.. /landlords/type GET Invalid type.');
+        next();
     }
 })
 
 // Show 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
     try {
         // get all comments
         const landlord = await Landlord.findById(req.params.id).exec();
@@ -113,24 +114,29 @@ router.get("/:id", async (req, res) => {
             landlordId: req.params.id
         });
         // render page with landlord and comments
-        res.render("landlords_show", {
+        res.status(200).render("landlords_show", {
             landlord,
             comments
         });
     } catch (err) {
-        console.log(err);
-        res.send("You broke it... /landlords/:id");
+        console.log('You broke it... /landlords/:id', err);
+        next();
     }
 })
 
 // Edit
 router.get("/:id/edit", checkLandlordOwner, async (req, res) => {
-    // get all comments
-    const landlord = await Landlord.findById(req.params.id).exec();
-    // if owner, render the form to edit
-    res.render("landlords_edit", {
-        landlord
-    });
+    try {
+        // get all comments
+        const landlord = await Landlord.findById(req.params.id).exec();
+        // if owner, render the form to edit
+        res.status(200).render("landlords_edit", {
+            landlord
+        });
+    } catch (error) {
+        console.log('You broke it.. /landlords/:id/edit EDIT');
+        res.status(400).redirect(`/landlords/${req.params.id}`);
+    }
 })
 
 // Edit authentication before refactoring with middleware function
@@ -190,15 +196,12 @@ router.put("/:id", checkLandlordOwner, async (req, res) => {
             new: true
         }).exec();
         req.flash("success", "Landlord updated!");
-        res.redirect(`/landlords/${req.params.id}`);
+        res.status(200).redirect(`/landlords/${req.params.id}`);
     } catch (err) {
-        console.log(err);
+        console.log('You broke it... /landlords/:id PUT', err);
         req.flash("error", "Error updating Landlord!");
-        // res.send("You broke it... /landlords/:id PUT");
-        res.redirect("/landlords");
-
+        res.status(400).redirect("/landlords");
     }
-
 })
 
 // Delete
@@ -206,12 +209,11 @@ router.delete("/:id", checkLandlordOwner, async (req, res) => {
     try {
         const deletedLandlord = await Landlord.findByIdAndDelete(req.params.id).exec();
         req.flash("success", "Landlord deleted!");
-        res.redirect("/landlords");
+        res.status(200).redirect("/landlords");
     } catch (err) {
-        console.log(err);
+        console.log('You broke it... /landlords/:id DELETE', err);
         req.flash("error", "Error deleting landlord!");
-        // res.send("You broke it... /landlords/:id DELETE");
-        req.redirect("back");
+        req.status(500).redirect("/landlords");
     }
 })
 

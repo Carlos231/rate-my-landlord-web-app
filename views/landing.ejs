@@ -1,5 +1,68 @@
 <%- include("partials/header") %>
-<h1>
-    Landing Page
-</h1>
-<%- include("partials/footer") %>
+
+    <link rel="stylesheet" href="/css/landing.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- API Key -->
+    <script src="<%=KEY%>" defer></script>
+    <script>
+        // Note: This example requires that you consent to location sharing when
+        // prompted by your browser. If you see the error "The Geolocation service
+        // failed.", it means you probably did not give permission for the browser to
+        // locate you.
+        let map, infoWindow;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 44.6046, lng: -123.2620 },
+                zoom: 12,
+            });
+            infoWindow = new google.maps.InfoWindow();
+            const locationButton = document.getElementById("button");
+            locationButton.addEventListener("click", () => {
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            infoWindow.setPosition(pos);
+                            infoWindow.setContent("Your Location.");
+                            infoWindow.open(map);
+                            pos.lat += .04; // give some room to see location
+                            map.setCenter(pos, 12);
+                        },
+                        () => {
+                            handleLocationError(true, infoWindow, map.getCenter());
+                        }
+                    );
+                } else {
+                    // Browser doesn't support Geolocation
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            });
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }</script>
+
+    <div class="container align-bottom" id="landing-container">
+        <h2>Welcome to RateMyLandlord.</h2>
+        <p>Look up what other people think of their landlords or sign in to add your own.
+        </p>
+
+        <button type="button" id="button" class="btn btn-primary btn-lg">Explore landlords near me</button>
+    </div>
+    <div id="map">
+    </div>
+
+
+    <%- include("partials/footer") %>

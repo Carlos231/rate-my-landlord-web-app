@@ -6,6 +6,11 @@
     padding-top: 1.5rem;
 } */
 
+body {
+    padding-top: 70px;
+    padding-bottom: 50px;
+}
+
 .card {
     border: 1px solid #ddd;
     border-radius: 1rem;
@@ -48,4 +53,14 @@
 .show_image-container img {
     /* upscale or downscale images depending */
     width: 80%;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    background-color: white;
+    text-align: center;
 }

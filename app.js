@@ -1,7 +1,6 @@
 // =======================
 // IMPORTS
 // =======================
-// NPM Imports
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -69,7 +68,6 @@ try {
     });
 }
 
-
 // Express Config
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -94,52 +92,6 @@ passport.serializeUser(User.serializeUser()); // What data should be stored in s
 passport.deserializeUser(User.deserializeUser()); // Get user data from the stored session
 passport.use(new LocalStrategy(User.authenticate())); // Use the local strategy
 
-
-// no longer need this when plugged into db
-// const landLords = [{
-//         name: 'Kobe Bryant',
-//         phone: 5037998122,
-//         email: 'kobe@kobeapartments.com',
-//         business: 'Kobe Apartments',
-//         img: 'https://images.squarespace-cdn.com/content/5ecdab0a27eb1f230be656e6/1597183147422-BRKWMN6XPEMZZ1O8VGZY/01-Standard%2BApartments-018.jpg?format=1500w&content-type=image%2Fjpeg',
-//         img_description: 'Butterfly on flower',
-//         reviews: [{
-//                 name: 'Bill',
-//                 content: 'He took all my money'
-//             },
-//             {
-//                 name: 'Ron',
-//                 content: 'Dont waste your time'
-//             },
-//             {
-//                 name: 'Jane',
-//                 content: 'Idk'
-//             }
-//         ]
-//     },
-//     {
-//         name: 'Emily Cover',
-//         phone: 5038005123,
-//         email: 'Emily@allapartments.com',
-//         business: 'All Apartments',
-//         img: 'https://redpeak.com/app/uploads/2020/04/777-Ash-Denver-Apartments-450x0-c-default.jpg',
-//         img_description: 'Picture of Blue Lakes',
-//         reviews: [{
-//                 name: 'john',
-//                 content: 'Shes hot'
-//             },
-//             {
-//                 name: 'Ruby',
-//                 content: 'Run away'
-//             },
-//             {
-//                 name: 'Chip',
-//                 content: 'Good landlord'
-//             }
-//         ]
-//     }
-// ];
-
 // State Config
 app.use((req, res, next) => {
     // value on response object we can add key value pairs to
@@ -157,9 +109,14 @@ app.use('/landlords', landlordRoutes);
 app.use('/landlords/:id/comments', commentRoutes);
 // app.use('/reviews', reviewRoutes);
 
+// Error page
+app.use('*', function (req, res, next) {
+    res.status(404).render('error', { 'error': "Requested resource " + req.originalUrl + " does not exist" });
+});
+
 // =======================
 // LISTEN
 // =======================
 app.listen(PORT, () => {
-    console.log(`rate_my_landlord is running on PORT: ${PORT}...`);
+    console.log(`== rate_my_landlord is running on PORT: ${PORT}...`);
 })

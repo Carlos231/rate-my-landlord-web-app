@@ -1,0 +1,34 @@
+html,
+body {
+    height: 100%;
+}
+
+/* Always set the map height explicitly to define the size of the div
+           * element that contains the map. */
+#map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+#landing-container {
+    vertical-align: middle;
+    position: relative;
+    z-index: 1;
+    /* The z-index should be higher than Google Maps */
+    width: 300px;
+    margin: 60px auto 0;
+    padding: 10px;
+    background: black;
+    /* height: auto; */
+    opacity: .75;
+    /* Set the opacity for a slightly transparent Google Form */
+    color: white;
+    border-radius: 20px;
+    /* top: -13%; */
+    top: -9%;
+}

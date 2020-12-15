@@ -12,12 +12,12 @@ const checkCommentOwner = require('../utils/checkCommentOwner');
 // add comments nested
 router.get("/new", isLoggedIn, (req, res) => {
     try {
-        res.render("comments_new", {
+        res.status(200).render("comments_new", {
             landlordId: req.params.id
         })
     } catch (err) {
-        console.log(err);
-        res.send("Broken... /comments/new GET");
+        console.log('Broken.. /comments/new GET', err);
+        next(err)
     }
 })
 
@@ -37,12 +37,12 @@ router.post("/", isLoggedIn, async (req, res) => {
         });
         // console.log(newComment);
         req.flash("success", "Comment created!");
-        res.redirect(`/landlords/${req.body.landlordId}`);
+        res.status(201).redirect(`/landlords/${req.body.landlordId}`);
     } catch (err) {
-        console.log(err);
+        console.log("Broken.. /landlords/:id/comments POST", err);
         req.flash("error", "Error creating comment!");
         // res.send("You broke it... /landlords/:id/comments POST")
-        req.redirect("/landlords");
+        res.status(400).redirect(`/landlords/${req.body.landlordId}`);
     }
 })
 
@@ -52,14 +52,15 @@ router.get("/:commentId/edit", checkCommentOwner, async (req, res) => {
         // const landlord = await Landlord.findById(req.params.id).exec();
         const comment = await Comment.findById(req.params.commentId).exec();
         // avoid qurerying twice:
-        res.render("comments_edit", {
+        res.status(200).render("comments_edit", {
             // landlord,
             landlord_id: req.params.id,
             comment
         });
     } catch (err) {
-        console.log(err);
-        // res.send("Broken... /comments EDIT");
+        console.log("Broken.. /comments EDIT", err);
+        req.flash("error", "Error finding comment!");
+        res.status(400).redirect(`/landlords/${req.params.id}`);
     }
 })
 
@@ -72,13 +73,11 @@ router.put("/:commentId", checkCommentOwner, async (req, res) => {
             new: true
         });
         req.flash("success", "Comment edited!");
-        res.redirect(`/landlords/${req.params.id}`);
+        res.status(200).redirect(`/landlords/${req.params.id}`);
     } catch (err) {
-        console.log(err);
+        console.log("Broken.. /comments UPDATE", err);
         req.flash("error", "Error editing comment!");
-        // res.send("Broken... /comments UPDATE");
-        res.redirect("/landlords");
-
+        res.status(400).redirect(`/landlords/${req.params.id}`);
     }
 })
 
@@ -87,12 +86,11 @@ router.delete("/:commentId", checkCommentOwner, async (req, res) => {
     try {
         const comment = await Comment.findByIdAndDelete(req.params.commentId);
         req.flash("success", "Comment deleted!");
-        res.redirect(`/landlords/${req.params.id}`);
+        res.status(200).redirect(`/landlords/${req.params.id}`);
     } catch (err) {
-        console.log(err);
+        console.log("Broken.. /comments DELETE", err);
         req.flash("error", "Error deleting comment!");
-        // res.send("Broken.. /comments DELETE");
-        res.redirect("/landlords");
+        res.status(400).redirect(`/landlords/${req.params.id}`);
     }
 })
 

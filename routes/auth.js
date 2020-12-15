@@ -5,7 +5,11 @@ const User = require('../models/user');
 
 // Sign up - New
 router.get('/signup', (req, res) => {
-    res.render('signup');
+    try {
+        res.status(200).render('signup');
+    } catch (err) {
+        next(err);
+    }
 })
 
 // Sign up - Create
@@ -16,24 +20,29 @@ router.post('/signup', async (req, res) => {
             email: req.body.email
         }), req.body.password);
         console.log("New user:", newUser);
-        req.flash("success", "Signed you up as ${newUser.username}");
+        req.flash("success", `Signed you up as "${newUser.username}"`);
         passport.authenticate('local')(req, res, () => {
-            res.redirect('/landlords');
+            res.status(201).redirect('/landlords');
         });
     } catch (err) {
-        console.log(err);
-        res.send("Broken... /signup POST");
+        console.log("Broken.. /singup POST", err.message);
+        req.flash("error", `Error signing you up as "${req.body.username}". ${err.message}.`);
+        res.status(400).redirect('/signup');
     }
 });
 
 // Login - show form
 router.get('/login', (req, res) => {
-    res.render('login');
+    try {
+        res.status(200).render('login');
+    } catch (error) {
+        next(err);
+    }
 });
 
 // Login
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/landlords',
+    successRedirect: '.',
     failureRedirect: '/login',
     failureFlash: true,
     successFlash: "Logged in successfully!"
@@ -43,7 +52,7 @@ router.post('/login', passport.authenticate('local', {
 router.get('/logout', (req, res) => {
     req.logout();
     req.flash("success", "You are logged out now.");
-    res.redirect('/landlords');
+    res.status(200).redirect('/landlords');
 });
 
 

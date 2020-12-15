@@ -1,41 +1,46 @@
 <%- include("partials/header") %>
 
 
-<div class="container mt-2">
+    <div class="container mt-2">
 
-    <!-- <div class="body-container"> -->
-    <!-- using boostrap classes now -->
-    <div class="row">
-        <%for (let i = 0; i<landlords.length; i++){ %>
-        <!-- <div class="card mx-3 my-3"> can compact it to m-3 -->
-        <div class="card m-3">
-            <!-- add link to objects value from its ID made by MongoDB -->
-            <a href="/landlords/<%=landlords[i]._id%>">
-                <img class="card-img card-img-top" src="<%=landlords[i].img%>" alt="<%=landlords[i].img_descripion%>">
-            </a>
-            <div class="card-text mb-3 mx-3">
-                <h2 class="card-name mt-3"><%=landlords[i].name%></h2>
-                <h2 class="card-name mt-3">(<%=landlords[i].business%>)</h2>
-                <h4 class="card-reviews">Reviews:</h4>
+        <!-- <div class="body-container"> -->
+        <!-- using boostrap classes now -->
+        <div class="row">
+            <%for (let i=0; i<landlords.length; i++){ %>
+                <!-- <div class="card mx-3 my-3"> can compact it to m-3 -->
+                <div class="card m-3">
+                    <!-- add link to objects value from its ID made by MongoDB -->
+                    <a href="/landlords/<%=landlords[i]._id%>">
+                        <img class="card-img card-img-top" src="<%=landlords[i].img%>"
+                            alt="<%=landlords[i].img_descripion%>">
+                    </a>
+                    <div class="card-text mb-3 mx-3">
+                        <h2 class="card-name mt-3">
+                            <%=landlords[i].name%>
+                        </h2>
+                        <h2 class="card-name mt-3">(<%=landlords[i].business%>)</h2>
+                        <h4 class="card-reviews">Reviews:</h4>
 
-                <% if (landlords[i].reviews.length > 0 ){ 
-                    for (let j = 0; j < landlords[i].reviews.length; j++){ %>
-                <p> Name: <%= landlords[i].reviews[j].name %></p>
-                <p> Quote: "<%= landlords[i].reviews[j].content %>"</p>
-                <% } 
-                    } else { %>
-                <p>No reviews yet</p>
+                        <% if (landlords[i].reviews.length> 0 ){ %>
+                            <% for (let j=0; j < landlords[i].reviews.length; j++){ %>
+                                <p> Name: <%= landlords[i].reviews[j].name %>
+                                </p>
+                                <p> Quote: "<%= landlords[i].reviews[j].content %>"</p>
+                                <% } } else { %>
+                                    <p>No reviews yet</p>
+                                    <% } %>
+
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email
+                                            with anyone else.</small>
+
+                    </div>
+                    <a href="/landlords/<%=landlords[i]._id%>"><button type="button"
+                            class="btn btn-primary btn-lg btn-block addReview">See
+                            more</button></a>
+
+                </div>
                 <% } %>
-
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                    else.</small>
-            </div>
-
-            <a href="/landlords/addReview"><button type="button" class="btn btn-primary btn-lg btn-block addReview">Add
-                    a Review</button></a>
         </div>
-        <% } %>
-    </div>
 
-</div>
-<%- include("partials/footer") %>
+    </div>
+    <%- include("partials/footer") %>
