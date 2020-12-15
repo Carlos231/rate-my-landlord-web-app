@@ -13,7 +13,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Carlos231/rate-my-landlord-web-app">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="/public/img/landing_page.png" alt="Logo">
   </a>
 
   <h3 align="center">Rate My Landlord</h3>
