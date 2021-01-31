@@ -23,9 +23,11 @@ router.get("/", async (req, res) => {
     // console.log(req.user);
     try {
         const landlords = await Landlord.find().exec();
+        const comments = await Comment.find().exec();
         // pass in the user
         res.status(200).render('landlords', {
-            landlords: landlords
+            landlords,
+            comments
         });
     } catch (err) {
         console.log('Broken.. /landlords/ GET', err);
@@ -93,8 +95,9 @@ router.get("/search", async (req, res) => {
                 $search: req.query.term
             }
         });
+        const comments = await Comment.find().exec();
         res.status(200).render("landlords", {
-            landlords
+            landlords, comments
         });
     } catch (err) {
         console.log('Broken /search GET', err);
@@ -108,7 +111,8 @@ router.get("/type/:type", async (req, res, next) => {
     const validTypes = ["apartments", "houses", "rooms"]; // if bigger application would pull this from a config file to edit easier
     if (validTypes.includes(req.params.type.toLocaleLowerCase())) {
         const landlords = await Landlord.find({ type: req.params.type }).exec();
-        res.status(200).render("landlords", { landlords });
+        const comments = await Comment.find().exec();
+        res.status(200).render("landlords", { landlords, comments });
     } else {
         console.log('Broken.. /landlords/type GET Invalid type.');
         next();
