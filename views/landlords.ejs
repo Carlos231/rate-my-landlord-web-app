@@ -21,22 +21,28 @@
                         <h2 class="card-name mt-3">(<%=landlords[i].business%>)</h2>
                         <h4 class="card-reviews">Reviews:</h4>
 
-                        <% if (landlords[i].reviews.length> 0 ){ %>
-                            <% for (let j=0; j < landlords[i].reviews.length; j++){ %>
-                                <p> Name: <%= landlords[i].reviews[j].name %>
-                                </p>
-                                <p> Quote: "<%= landlords[i].reviews[j].content %>"</p>
-                                <% } } else { %>
-                                    <p>No reviews yet</p>
-                                    <% } %>
 
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email
-                                            with anyone else.</small>
+                        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email
+                                            with anyone else.</small> -->
+                        <% let isEmptyComments=true;%>
+                            <% comments.forEach((comment=> { %>
+                                <% if (landlords[i]._id.equals(comment.landlordId)) { %>
+                                    <% isEmptyComments=false;%>
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            <%= `\"${comment.text}" - ${comment.user.username}` %>
+                                        </small> %>
+                                        <%} })) %>
+                                            <% if (isEmptyComments) { %>
+                                                <small id="emailHelp" class="form-text text-muted">No reviews yet
+                                                </small> %>
+                                                <% } %>
+
 
                     </div>
-                    <a href="/landlords/<%=landlords[i]._id%>"><button type="button"
-                            class="btn btn-primary btn-lg btn-block addReview">See
+                    <a href=" /landlords/<%=landlords[i]._id%>"><button type="button"
+                            class="btn btn-primary btn-lg btn-block">See
                             more</button></a>
+                    <!-- removed addReview class -->
 
                 </div>
                 <% } %>
