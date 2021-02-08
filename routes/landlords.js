@@ -7,6 +7,17 @@ const Comment = require('../models/comment');
 const isLoggedIn = require('../utils/isLoggedIn');
 const checkLandlordOwner = require('../utils/checkLandlordOwner');
 
+let KEY;
+
+// Config Import
+try {
+    const config = require('../config');
+    KEY = config.googleMaps.KEY;
+} catch (error) {
+    console.log("Could not import config. Not working locally, error");
+    KEY = process.env.MAPSAPI;
+}
+
 // index - get everything
 router.get("/", async (req, res) => {
     // console.log(req.user);
@@ -33,6 +44,7 @@ router.post("/", isLoggedIn, async (req, res) => {
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
+        address: req.body.address,
         business: req.body.business,
         type,
         // negate - first one is string, flip it to false, then flip again for true
@@ -63,7 +75,7 @@ router.post("/", isLoggedIn, async (req, res) => {
 // New
 router.get("/new", isLoggedIn, (req, res, next) => {
     try {
-        res.status(200).render("landlords_new");
+        res.status(200).render("landlords_new", { KEY: KEY });
     } catch (err) {
         console.log('Broken... /landlords/new', err);
         next();
@@ -106,7 +118,7 @@ router.get("/type/:type", async (req, res, next) => {
 // Show 
 router.get("/:id", async (req, res, next) => {
     try {
-        // get all comments
+        // get all landlords
         const landlord = await Landlord.findById(req.params.id).exec();
         // get all comments associated with landlord
         // queries on mongoose
@@ -139,42 +151,6 @@ router.get("/:id/edit", checkLandlordOwner, async (req, res) => {
     }
 })
 
-// Edit authentication before refactoring with middleware function
-// router.get("/:id/edit", checkLandlordOwner, async (req, res) => {
-//     if (req.isAuthenticated()) { // check if the user is logged in
-//         // get all comments
-//         const landlord = await Landlord.findById(req.params.id).exec();
-//         // check if both of these match
-//         console.log(landlord.owner.id);
-//         console.log(req.user._id);
-//         if (landlord.owner.id.equals(req.user._id)) {
-//             // if owner, render the form to edit
-//             res.render("landlords_edit", {
-//                 landlord
-//             });
-//         } else { // if not redirect to the show page
-//             res.redirect(`/landlords/${landlord._id}`);
-//         }
-//     } else { // if not logged in redirect to the login
-//         res.redirect("/login");
-//     }
-// })
-
-// Edit - before authentication
-// router.get("/:id/edit", isLoggedIn, async (req, res) => {
-//     try {
-//         // get data from db
-//         const landlord = await Landlord.findById(req.params.id).exec();
-//         // render edit form, passing in that comic
-//         res.render("landlords_edit", {
-//             landlord
-//         });
-//     } catch (err) {
-//         console.log(err);
-//         res.send("You broke it... /landlords/:id/edit");
-//     }
-// })
-
 // Update
 router.put("/:id", checkLandlordOwner, async (req, res) => {
     // borrow this from post
@@ -183,6 +159,7 @@ router.put("/:id", checkLandlordOwner, async (req, res) => {
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
+        address: req.body.address,
         business: req.body.business,
         type,
         owner: !!req.body.owner,

@@ -2,20 +2,64 @@
 
     <link rel="stylesheet" href="/css/landing.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <!-- API Key -->
-    <script src="<%=KEY%>" defer></script>
+
     <script>
-        // Note: This example requires that you consent to location sharing when
-        // prompted by your browser. If you see the error "The Geolocation service
-        // failed.", it means you probably did not give permission for the browser to
-        // locate you.
-        let map, infoWindow;
+        let map, infoWindow, service, geocoder;
+
+        // Convert to json and string for string browser
+        let landlords = '<%- JSON.stringify(landlords) %>';
+        // Convert to object again to work with
+        landlords = JSON.parse(landlords);
+        // console.log(typeof landlords)
+        // console.log(landlords)
 
         function initMap() {
+            let startLocation = new google.maps.LatLng(44.6046, -123.2620);
+
             map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 44.6046, lng: -123.2620 },
-                zoom: 12,
+                center: startLocation,
+                zoom: 15,
+                mapTypeId: "roadmap",
             });
+
+            geocoder = new google.maps.Geocoder();
+            codeAddress(geocoder, map);
+
+            function codeAddress(geocoder, map) {
+                for (let i = 0; i < landlords.length; i++) {
+                    // console.log(landlords[i].name, landlords[i].address);
+                    geocoder.geocode({ 'address': landlords[i].address }, function (results, status) {
+                        if (status === 'OK') {
+                            map.setCenter(results[0].geometry.location);
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                animation: google.maps.Animation.DROP,
+                                position: results[0].geometry.location
+                            });
+                            var infowindow = new google.maps.InfoWindow({
+                                content: landlords[i].name + '<br>' + landlords[i].address
+                            });
+                            marker.addListener("click", toggleBounce);
+
+                            function toggleBounce() {
+                                if (marker.getAnimation() !== null) {
+                                    marker.setAnimation(null);
+                                    infowindow.close(map, marker);
+                                } else {
+                                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                                    infowindow.open(map, marker);
+                                }
+                            }
+
+                        } else {
+                            console.log("No address for: ", landlords[i].name);
+                            alert('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+                }
+            }
+
+            // get info for current location
             infoWindow = new google.maps.InfoWindow();
             const locationButton = document.getElementById("button");
             locationButton.addEventListener("click", () => {
@@ -52,7 +96,20 @@
                     : "Error: Your browser doesn't support geolocation."
             );
             infoWindow.open(map);
-        }</script>
+        }
+
+        function placeMarker(map, location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            var infowindow = new google.maps.InfoWindow({
+                content: location.name + '<br>Address: ' + location.address
+            });
+            infowindow.open(map, marker);
+        }
+
+    </script>
 
     <div class="container align-bottom" id="landing-container">
         <h2>Welcome to RateMyLandlord.</h2>
@@ -64,5 +121,7 @@
     <div id="map">
     </div>
 
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=<%=KEY%>&callback=initMap&libraries=places&v=weekly"></script>
 
     <%- include("partials/footer") %>
