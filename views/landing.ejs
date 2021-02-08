@@ -74,7 +74,7 @@
                             infoWindow.setPosition(pos);
                             infoWindow.setContent("Your Location.");
                             infoWindow.open(map);
-                            pos.lat += .04; // give some room to see location
+                            pos.lat += 1; // give some room to see location
                             map.setCenter(pos, 12);
                         },
                         () => {
@@ -97,18 +97,6 @@
             );
             infoWindow.open(map);
         }
-
-        function placeMarker(map, location) {
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-            var infowindow = new google.maps.InfoWindow({
-                content: location.name + '<br>Address: ' + location.address
-            });
-            infowindow.open(map, marker);
-        }
-
     </script>
 
     <div class="container align-bottom" id="landing-container">

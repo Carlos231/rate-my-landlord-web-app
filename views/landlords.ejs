@@ -18,32 +18,32 @@
                         <h2 class="card-name mt-3">
                             <%=landlords[i].name%>
                         </h2>
-                        <h2 class="card-name mt-3">(<%=landlords[i].business%>)</h2>
-                        <h4 class="card-reviews">Reviews:</h4>
+                        <h2 class="card-business mt-3">(<%=landlords[i].business%>)</h2>
+                        <h5 class="card-reviews">Reviews:</h5>
 
 
                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email
                                             with anyone else.</small> -->
-                        <% let isEmptyComments=true;%>
+                        <% let isEmptyComments=true; let count=0;%>
                             <% comments.forEach((comment=> { %>
-                                <% if (landlords[i]._id.equals(comment.landlordId)) { %>
+                                <% if (landlords[i]._id.equals(comment.landlordId) && count < 3) { %>
                                     <% isEmptyComments=false;%>
                                         <small id="emailHelp" class="form-text text-muted">
-                                            <%= `\"${comment.text}" - ${comment.user.username}` %>
+                                            <%= `\"${comment.text.slice(0,135)}..." -` %>
+                                                <b>
+                                                    <%=comment.user.username%>
+                                                </b>
                                         </small> %>
-                                        <%} })) %>
-                                            <% if (isEmptyComments) { %>
-                                                <small id="emailHelp" class="form-text text-muted">No reviews yet
-                                                </small> %>
-                                                <% } %>
-
-
+                                        <% count++; %>
+                                            <%} })) %>
+                                                <% if (isEmptyComments) { %>
+                                                    <small id="emailHelp" class="form-text text-muted">No reviews yet
+                                                    </small> %>
+                                                    <% } %>
                     </div>
                     <a href=" /landlords/<%=landlords[i]._id%>"><button type="button"
-                            class="btn btn-primary btn-lg btn-block">See
+                            class="btn btn-primary btn-lg btn-block addReview">See
                             more</button></a>
-                    <!-- removed addReview class -->
-
                 </div>
                 <% } %>
         </div>

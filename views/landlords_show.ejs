@@ -17,35 +17,13 @@
                 </p>
                 <p> Email: <%= landlord.email %>
                 </p>
+                <p> Address: <%= landlord.address %>
+                </p>
                 <p> Business Type: <%= landlord.type %>
                 </p>
                 <p> Owner?: <%= landlord.owner ? 'Yes' : 'No' %>
                 </p>
 
-                <!-- Show top reviews or other information -->
-                <!-- <table class="table">
-                    <h3>Top Reviews:</h3>
-                    <% if (comments.length> 0 ){ %>
-
-                        <tbody>
-                            <%for (let i=0; i < comments.length; i++){ %>
-                                <tr>
-                                    <th scope="row">
-                                        <%=i%>
-                                    </th>
-                                    <td>
-                                        <%= comments[i].username %>
-                                    </td>
-                                    <td>"<%= comments[i].text %>"</td>
-                                </tr>
-                                <% } } else { %>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td>No reviews yet</td>
-                                    </tr>
-                                    <% } %>
-                        </tbody>
-                </table> -->
                 <% if (user && user.username===landlord.owner.username) { %>
                     <a href="/landlords/<%=landlord._id%>/edit">
                         <button class="btn btn-outline-info btn-lg btn-block mb-2">Edit</button>
