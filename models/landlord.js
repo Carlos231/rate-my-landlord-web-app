@@ -4,6 +4,7 @@ const landlordSchema = new mongoose.Schema({
     name: String,
     phone: String,
     email: String,
+    address: String,
     business: String,
     type: String,
     owner: Boolean,
