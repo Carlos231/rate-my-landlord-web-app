@@ -17,34 +17,13 @@
                 </p>
                 <p> Email: <%= landlord.email %>
                 </p>
+                <p> Address: <%= landlord.address %>
+                </p>
                 <p> Business Type: <%= landlord.type %>
                 </p>
-                <p> Owner?: <%= landlord.owner==='false' ? 'No' : 'Yes' %>
+                <p> Owner?: <%= landlord.owner ? 'Yes' : 'No' %>
                 </p>
 
-                <table class="table">
-                    <h3>Top Reviews:</h3>
-                    <% if (landlord.reviews.length> 0 ){ %>
-
-                        <tbody>
-                            <%for (let i=0; i < landlord.reviews.length; i++){ %>
-                                <tr>
-                                    <th scope="row">
-                                        <%=i%>
-                                    </th>
-                                    <td>
-                                        <%= landlord.reviews[i].name %>
-                                    </td>
-                                    <td>"<%= landlord.reviews[i].content %>"</td>
-                                </tr>
-                                <% } } else { %>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td>No reviews yet</td>
-                                    </tr>
-                                    <% } %>
-                        </tbody>
-                </table>
                 <% if (user && user.username===landlord.owner.username) { %>
                     <a href="/landlords/<%=landlord._id%>/edit">
                         <button class="btn btn-outline-info btn-lg btn-block mb-2">Edit</button>
@@ -58,10 +37,10 @@
 
         <!-- Comments -->
         <div class="row show_comment-header mt-3">
-            <h2>Comments:</h2>
+            <h2>Reviews:</h2>
         </div>
         <a href="/landlords/<%=landlord._id%>/comments/new">
-            <button class="btn btn-success btn-lg mt-3 mb-4">Add Comment</button>
+            <button class="btn btn-success btn-lg mt-3 mb-4">Add a Review</button>
         </a>
         <% comments.forEach((comment=> { %>
             <div class="row show_comment-container py-2 border">
