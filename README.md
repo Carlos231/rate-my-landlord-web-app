@@ -53,23 +53,28 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Rate my Landlord is a resource I have been wanting to build since living in my small college town. Most students come from out of college towns and do not have any insights on their potential landlords. Currently, two other applications show up when searching for them and they are not user friendly or very useful. I am building this application to showcase the skills and knowledge I have gained while working towards my Computer Science degree at Oregon State Univesity in Corvallis, Oregon. I have the most experience working on the back-end of application and am working on learning React to complete the front-end of the application. Testing is done through Postman. 
+Rate my Landlord is a resource I had been planning to build since living in my small college town. Most students usually arrive from out of their university area and do not have any insights into their potential landlords. When searching for a similar resource, two other applications appeared and they were not very user friendly. I am building this application to increase the skills and knowledge I have gained while working towards my Computer Science degree at Oregon State University and to practice continuous integration with features and improvements. I have the most experience working on the back-end of applications and have built the front end using Embedded JavaScript. 
+
+I am using this application to reinforce good coding practices and mimick to as close as possible professional settings. As I learn new features and technologies I am working on implementing them and continue to follow professional guides such as the Airbnb JavaScript Style Guide and the program development cycle. Some of my bigger plans include updating the front-end to React as I explore it and include features that users will find useful. Testing is being done through Postman. 
 
 ### Currently the features of this application include:
 
 * User autorization and authentication
 * RESTful API made with a non-relational database
-* Search funtionality
 * CRUD functionalities
+* Search functionality
 * Templating using EJS
+* Location information using Google's Map API
+* UI demonstrates all functionalities
 
 ### Features I am working on implementing:
 * Complete the landing page
 * Add secure HTTPS
 * Add a landlords rating system
-* Connect Google maps API
+* Complete mobile view
+* See roadmap for more..
 
-The application is still a work on progress. If you have any suggestions feel free to contact me.
+The application is still a work in progress. If you have any suggestions feel free to contact me.
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
@@ -110,10 +115,10 @@ npm install
 ## Usage
 ```sh
 1. npm start
-2. Exlpore on localhost
+2. Explore on localhost
 ```
 
-<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples, and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
@@ -129,7 +134,7 @@ See the [open issues](https://github.com/Carlos231/rate-my-landlord-web-app/issu
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source-community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
