@@ -10,13 +10,7 @@ const checkLandlordOwner = require('../utils/checkLandlordOwner');
 let KEY;
 
 // Config Import
-try {
-    const config = require('../config');
-    KEY = config.googleMaps.KEY;
-} catch (error) {
-    console.log("Could not import config. Not working locally, error");
-    KEY = process.env.MAPSAPI;
-}
+KEY = process.env.MAPSAPI;
 
 // index - get everything
 router.get("/", async (req, res) => {

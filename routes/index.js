@@ -7,13 +7,7 @@ const isLoggedIn = require('../utils/isLoggedIn');
 let KEY;
 
 // Config Import
-try {
-    const config = require('../config');
-    KEY = config.googleMaps.KEY;
-} catch (error) {
-    console.log("Could not import config. Not working locally, error");
-    KEY = process.env.MAPSAPI;
-}
+KEY = process.env.MAPSAPI;
 
 // index
 router.get("/", async (req, res, next) => {
