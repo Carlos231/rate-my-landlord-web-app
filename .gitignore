@@ -1,5 +1,5 @@
 # DB config
-config.js
+.env
 
 # Logs
 logs
