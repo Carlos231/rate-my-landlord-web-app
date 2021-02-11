@@ -1,21 +1,22 @@
 <%- include("partials/header") %>
 
-<div class="container">
-    <h1>Add your review</h1>
+    <div class="container">
+        <h1>Add your review</h1>
 
-    <form action="/addReview" method="POST">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="e.g. Bob" autofocus>
-            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-        </div>
-        <div class="form-group">
-            <label for="content">Your Review</label>
-            <textarea class="form-control" rows="3" name="content" placeholder="e.g.. The food was meh..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+        <form action="/addReview" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="e.g. Bob" autofocus>
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+            <div class="form-group">
+                <label for="content">Your Review</label>
+                <textarea class="form-control" rows="3" name="content"
+                    placeholder="e.g.. The food was meh..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 
 
-<%- include("partials/footer") %>
+    <%- include("partials/footer") %>
