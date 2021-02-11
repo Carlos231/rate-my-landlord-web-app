@@ -15,13 +15,6 @@ const expressSession = require('express-session');
 // Config Import
 require('dotenv').config();
 
-// try {
-//     var config = require('./config');
-// } catch (error) {
-//     console.log("Could not import config. Not working locally");
-//     console.log(error);
-// }
-
 const PORT = process.env.PORT || 3000;
 
 // Route Imports
