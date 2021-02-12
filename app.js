@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 const indexRoutes = require('./routes/index');
 const landlordRoutes = require('./routes/landlords');
 const commentRoutes = require('./routes/comments');
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
 // const reviewRoutes = require('./routes/reviews');
 
 // Model Imports
@@ -84,7 +84,7 @@ app.use((req, res, next) => {
     res.locals.errorMessage = req.flash("error");
     res.locals.successMessage = req.flash("success");
     next();
-})
+});
 
 // Route Config
 app.use('/', indexRoutes);
@@ -103,4 +103,4 @@ app.use('*', function (req, res, next) {
 // =======================
 app.listen(PORT, () => {
     console.log(`== rate_my_landlord is running on PORT: ${PORT}...`);
-})
+});
