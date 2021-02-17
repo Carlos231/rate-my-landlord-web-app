@@ -1,13 +1,12 @@
-
 <!-- PROJECT SHIELDS -->
+
+[![Build Status](https://travis-ci.com/Carlos231/rate-my-landlord-web-app.svg?branch=master)](https://travis-ci.com/Carlos231/rate-my-landlord-web-app)
 [![Contributors][contributors-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/graphs/contributors)
 [![Forks][forks-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/network/members)
 [![Stargazers][stars-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/stargazers)
 [![Issues][issues-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/issues)
 [![MIT License][license-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/blob/master/LICENSE.txt)
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/carlos-lopez-molina/)
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -32,68 +31,70 @@
   </p>
 </p>
 
-
-
 <!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
 
-* [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
-
-
+- [About the Project](#about-the-project)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
-Rate my Landlord is a resource I had been planning to build since living in my small college town. Most students usually arrive from out of their university area and do not have any insights into their potential landlords. When searching for a similar resource, two other applications appeared and they were not very user friendly. I am building this application to increase the skills and knowledge I have gained while working towards my Computer Science degree at Oregon State University and to practice continuous integration with features and improvements. I have the most experience working on the back-end of applications and have built the front end using Embedded JavaScript. 
 
-I am using this application to reinforce good coding practices and mimick to as close as possible professional settings. As I learn new features and technologies I am working on implementing them and continue to follow professional guides such as the Airbnb JavaScript Style Guide and the program development cycle. Some of my bigger plans include updating the front-end to React as I explore it and include features that users will find useful. Testing is being done through Postman. 
+## About The Project
+
+Rate my Landlord is a resource I had been planning to build since living in my small college town. Most students usually arrive from out of their university area and do not have any insights into their potential landlords. When searching for a similar resource, two other applications appeared and they were not very user friendly. I am building this application to increase the skills and knowledge I have gained while working towards my Computer Science degree at Oregon State University and to practice continuous integration with features and improvements. I have the most experience working on the back-end of applications and have built the front end using Embedded JavaScript.
+
+I am using this application to reinforce good coding practices and mimick to as close as possible professional settings. As I learn new features and technologies I am working on implementing them and continue to follow professional guides such as the Airbnb JavaScript Style Guide and the program development cycle. Some of my bigger plans include updating the front-end to React as I explore it and include features that users will find useful. Testing is being done through Postman.
 
 ### Currently the features of this application include:
 
-* User autorization and authentication
-* RESTful API made with a non-relational database
-* CRUD functionalities
-* Search functionality
-* Templating using EJS
-* Location information using Google's Map API
-* UI demonstrates all functionalities
+- User autorization and authentication
+- RESTful API made with a non-relational database
+- CRUD functionalities
+- Search functionality
+- Templating using EJS
+- Location information using Google's Map API
+- UI demonstrates all functionalities
+- Continuous integration with Travis and Unit tested with Mocha and Chai frameworks
 
 ### Features I am working on implementing:
-* Complete the landing page
-* Add secure HTTPS
-* Add a landlords rating system
-* Complete mobile view
-* See roadmap for more..
+
+- Complete the landing page
+- Add secure HTTPS
+- Add a landlords rating system
+- Complete mobile view
+- See roadmap for more..
 
 The application is still a work in progress. If you have any suggestions feel free to contact me.
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-
 ### Built With
 
-* [Bootstrap](https://getbootstrap.com)
-* [Express](https://expressjs.com/)
-* [MongoDB](https://www.mongodb.com/)
-* [Node.js](https://nodejs.org/en/)
-
+- [Bootstrap](https://getbootstrap.com)
+- [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Node.js](https://nodejs.org/en/)
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
+
+- npm
+
 ```sh
 npm install npm@latest -g
 ```
@@ -101,18 +102,21 @@ npm install npm@latest -g
 ### Installation
 
 1. Clone the repo
+
 ```sh
 git clone https://github.com/Carlos231/rate-my-landlord-web-app.git
 ```
+
 2. Install NPM packages
+
 ```sh
 npm install
 ```
 
-
-
 <!-- USAGE EXAMPLES -->
+
 ## Usage
+
 ```sh
 1. npm start
 2. Explore on localhost
@@ -122,16 +126,14 @@ npm install
 
 _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
-
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/Carlos231/rate-my-landlord-web-app/issues) for a list of proposed features (and known issues).
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source-community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -142,14 +144,14 @@ Contributions are what make the open source-community such an amazing place to l
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
+
 ## Contact
 
 Carlos Lopez-Molina - [LinkedIn](https://www.linkedin.com/in/carlos-lopez-molina/) - celm000@gmail.com
@@ -163,12 +165,9 @@ Project Link: [https://github.com/Carlos231/rate-my-landlord-web-app](https://gi
 * []()
 * []() -->
 
-
-
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/Carlos231/repo.svg?style=flat-square
 [contributors-url]: https://github.com/Carlos231/repo/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Carlos231/repo.svg?style=flat-square

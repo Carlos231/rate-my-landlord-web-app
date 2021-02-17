@@ -21,7 +21,8 @@ const PORT = process.env.PORT || 3000;
 const indexRoutes = require('./routes/index');
 const landlordRoutes = require('./routes/landlords');
 const commentRoutes = require('./routes/comments');
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
+const accountRoutes = require('./routes/accounts');
 // const reviewRoutes = require('./routes/reviews');
 
 // Model Imports
@@ -46,11 +47,17 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Mongoose Config Connect to DB
-mongoose.connect(process.env.MONGODB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-});
+try {
+    mongoose.connect(process.env.MONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    });
+} catch (error) {
+    console.log("Could not connect to DB");
+    console.log(error);
+}
 
 // Express Config
 app.set('view engine', 'ejs');
@@ -84,11 +91,12 @@ app.use((req, res, next) => {
     res.locals.errorMessage = req.flash("error");
     res.locals.successMessage = req.flash("success");
     next();
-})
+});
 
 // Route Config
 app.use('/', indexRoutes);
 app.use('/', authRoutes);
+app.use('/accounts', accountRoutes);
 app.use('/landlords', landlordRoutes);
 app.use('/landlords/:id/comments', commentRoutes);
 // app.use('/reviews', reviewRoutes);
@@ -101,6 +109,9 @@ app.use('*', function (req, res, next) {
 // =======================
 // LISTEN
 // =======================
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`== rate_my_landlord is running on PORT: ${PORT}...`);
-})
+});
+
+// Export our app for testing purposes
+module.exports = server

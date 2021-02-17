@@ -1,9 +1,22 @@
 <%- include('partials/header') %>
 
-<h1>
-    Account Page HERE
-</h1>
+    <body>
+        <div class="container mt-2">
 
+            <h1>
+                Welcome, <%= user.username %>.
+            </h1>
 
+            <p>
+                Account information HERE...
+            </p>
 
-<%- include('partials/footer') %>
+            <div>
+                <form action="/accounts/<%=user._id%>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-outline-danger btn-lg btn-block">Delete account</button>
+                </form>
+            </div>
+        </div>
+    </body>
+
+    <%- include('partials/footer') %>
