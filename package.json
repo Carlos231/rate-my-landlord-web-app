@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "test": "jshint app.js"
+    "test": "mocha --recursive --exit --timeout 10000"
   },
   "author": "Carlos Lopez-Molina",
   "license": "ISC",
@@ -25,6 +25,9 @@
     "passport-local-mongoose": "^6.0.1"
   },
   "devDependencies": {
-    "jshint": "^2.12.0"
+    "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.0",
+    "supertest": "^6.1.3"
   }
 }

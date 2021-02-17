@@ -4,10 +4,9 @@ const router = express.Router();
 const Landlord = require('../models/landlord');
 
 const isLoggedIn = require('../utils/isLoggedIn');
-let KEY;
 
 // Config Import
-KEY = process.env.MAPSAPI;
+let KEY = process.env.MAPSAPI;
 
 // index
 router.get("/", async (req, res, next) => {
