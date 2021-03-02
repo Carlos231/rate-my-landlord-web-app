@@ -21,7 +21,7 @@
                 </p>
                 <p> Business Type: <%= landlord.type %>
                 </p>
-                <p> Owner?: <%= landlord.owner ? 'Yes' : 'No' %>
+                <p> Owner?: <%= landlord.isOwner ? 'Yes' : 'No' %>
                 </p>
 
                 <% if (user && user.username===landlord.owner.username) { %>

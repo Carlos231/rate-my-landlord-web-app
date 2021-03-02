@@ -14,16 +14,18 @@ const User = require('../models/user');
  */
 describe('Authentication routes', () => {
     /*
-    * Test the /GET/singup route
+    * Test the /singup routes
     */
-    describe("GET: /signup", function () {
+    describe("/signup routes", function () {
         let user;
 
         it("it should GET sign up page", () => {
             request(app).get('/signup')
                 .then((res) => {
-                    expect(res.statusCode).to.equal(200);
                     expect(res).to.not.be.empty;
+                    expect(res.statusCode).to.equal(200);
+                    expect(res).to.have.header('content-type', 'text/html; charset=utf-8');
+                    expect(res.text).to.contain('Express');
                     done()
                 })
                 .catch((err) => done(err))
@@ -71,20 +73,22 @@ describe('Authentication routes', () => {
     });
 
     /*
-    * Test the /POST/login route
+    * Test the /login routes
     */
-    describe("POST: /login", function () {
+    describe("/login routes", function () {
         it("it should GET login page", () => {
             request(app).get('/login')
                 .then((res) => {
-                    expect(res.statusCode).to.equal(200);
                     expect(res).to.not.be.empty;
+                    expect(res.statusCode).to.equal(200);
+                    expect(res).to.have.header('content-type', 'text/html; charset=utf-8');
+                    expect(res.text).to.contain('Express');
                     done()
                 })
                 .catch((err) => done(err))
         });
 
-        it("successfully loggedin then redirect to homepage", (done) => {
+        it("successfully POST loggedin then redirect to homepage", (done) => {
             request(app)
                 .post('/login')
                 .type('form')
@@ -94,7 +98,19 @@ describe('Authentication routes', () => {
                 .end(done)
         });
 
-        it("does not login then redirect to login page", (done) => {
+        it("it should GET logout page on logout success", () => {
+            request(app).get('/logout')
+                .then((res) => {
+                    expect(res).to.not.be.empty;
+                    expect(res.statusCode).to.equal(200);
+                    expect(res).to.have.header('content-type', 'text/html; charset=utf-8');
+                    expect(res.text).to.contain('Express');
+                    done()
+                })
+                .catch((err) => done(err))
+        });
+
+        it("does not POST login then redirect to login page", (done) => {
             request(app)
                 .post('/login')
                 .type('form')

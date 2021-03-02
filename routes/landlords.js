@@ -7,10 +7,8 @@ const Comment = require('../models/comment');
 const isLoggedIn = require('../utils/isLoggedIn');
 const checkLandlordOwner = require('../utils/checkLandlordOwner');
 
-let KEY;
-
 // Config Import
-KEY = process.env.MAPSAPI;
+const KEY = process.env.MAPSAPI;
 
 // index - get everything
 router.get("/", async (req, res) => {
@@ -44,7 +42,7 @@ router.post("/", isLoggedIn, async (req, res) => {
         business: req.body.business,
         type,
         // negate - first one is string, flip it to false, then flip again for true
-        owner: !!req.body.owner,
+        isOwner: !!req.body.owner,
         img: req.body.img,
         img_description: req.body.img_description,
         owner: {
@@ -81,6 +79,7 @@ router.get("/new", isLoggedIn, (req, res, next) => {
 // Search
 router.get("/search", async (req, res) => {
     try {
+
         // has to be indexed for this to work on search
         // will only search text fields
         // get all comments matching the query

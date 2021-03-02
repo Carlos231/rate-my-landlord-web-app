@@ -7,7 +7,7 @@ const landlordSchema = new mongoose.Schema({
     address: String,
     business: String,
     type: String,
-    owner: Boolean,
+    isOwner: Boolean,
     img: String,
     img_description: String,
     owner: {

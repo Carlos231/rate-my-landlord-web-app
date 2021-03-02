@@ -33,7 +33,7 @@ const User = require('./models/user');
 // =======================
 // DEVELOPMENT
 // =======================
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 //  Seed the DB
 // const seed = require('./utils/seedDB');
 // seed();
