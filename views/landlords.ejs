@@ -1,6 +1,7 @@
 <%- include("partials/header") %>
 
     <div class="container mt-2">
+
         <h1>Explore all of the landlords</h1>
 
         <!-- <div class="body-container"> -->
@@ -37,7 +38,8 @@
                                         <% count++; %>
                                             <%} })) %>
                                                 <% if (isEmptyComments) { %>
-                                                    <small id="emailHelp" class="form-text text-muted">No reviews yet
+                                                    <small id="emailHelp" class="form-text text-muted">No
+                                                        reviews yet
                                                     </small> %>
                                                     <% } %>
                     </div>
@@ -47,6 +49,46 @@
                 </div>
                 <% } %>
         </div>
+
+        <nav aria-label="Page navigation">
+            <% if (pages> 0) { %>
+                <ul class="pagination justify-content-center">
+                    <% if (current==1) { %>
+                        <li class="page-link disabled"><a>First</a></li>
+                        <% } else { %>
+                            <li><a class="page-link" href="/landlords/pages/1">First</a></li>
+                            <% } %>
+                                <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %>
+                                    <% if (i !==1) { %>
+                                        <li class="page-link disabled"><a>...</a></li>
+                                        <% } %>
+                                            <% for (; i <=(Number(current) + 4) && i <=pages; i++) { %>
+                                                <% if (i==current) { %>
+                                                    <li class="page-item active"><a class="page-link">
+                                                            <%= i %>
+                                                        </a></li>
+                                                    <% } else { %>
+                                                        <li><a class="page-link" href="/landlords/pages/<%= i %>">
+                                                                <%= i %>
+                                                            </a></li>
+                                                        <% } %>
+                                                            <% if (i==Number(current) + 4 && i < pages) { %>
+                                                                <li class="page-link disabled"><a>...</a>
+                                                                </li>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% if (current==pages) { %>
+                                                                            <li class="page-link disabled">
+                                                                                <a>Last</a>
+                                                                            </li>
+                                                                            <% } else { %>
+                                                                                <li><a class="page-link"
+                                                                                        href="/landlords/pages/<%= pages %>">Last</a>
+                                                                                </li>
+                                                                                <% } %>
+                </ul>
+                <% } %>
+        </nav>
 
     </div>
     <%- include("partials/footer") %>
