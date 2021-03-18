@@ -7,21 +7,59 @@ const Comment = require('../models/comment');
 const isLoggedIn = require('../utils/isLoggedIn');
 const checkLandlordOwner = require('../utils/checkLandlordOwner');
 
-let KEY;
-
 // Config Import
-KEY = process.env.MAPSAPI;
+const KEY = process.env.MAPSAPI;
 
 // index - get everything
 router.get("/", async (req, res) => {
     // console.log(req.user);
+    const perPage = 1;
+    let page = 1;
+
     try {
-        const landlords = await Landlord.find().exec();
+        const count = await Landlord.countDocuments({});
+        const landlords = await Landlord.find()
+            .sort({ _id: 1 })
+            .skip(page > 0 ? ((page - 1) * perPage) : 0)
+            .limit(perPage)
+            .exec();
         const comments = await Comment.find().exec();
         // pass in the user
+        // console.log("Pages:" + Math.ceil(count / perPage))
         res.status(200).render('landlords', {
             landlords,
-            comments
+            comments,
+            current: page,
+            pages: Math.ceil(count / perPage)
+        });
+    } catch (err) {
+        console.log('Broken.. /landlords/ GET', err);
+        req.flash('error', 'Error fetching landlords');
+        res.status(500).redirect('/');
+    }
+})
+
+// get index pages
+router.get("/pages/:page", async (req, res) => {
+    // console.log(req.user);
+    const perPage = 1;
+    let page = req.params.page || 1;
+
+    try {
+        const count = await Landlord.countDocuments({});
+        const landlords = await Landlord.find()
+            .sort({ _id: 1 })
+            .skip(page > 0 ? ((page - 1) * perPage) : 0)
+            .limit(perPage)
+            .exec();
+        const comments = await Comment.find().exec();
+        // pass in the user
+        // console.log("Pages:" + Math.ceil(count / perPage))
+        res.status(200).render('landlords', {
+            landlords,
+            comments,
+            current: page,
+            pages: Math.ceil(count / perPage)
         });
     } catch (err) {
         console.log('Broken.. /landlords/ GET', err);
@@ -44,7 +82,7 @@ router.post("/", isLoggedIn, async (req, res) => {
         business: req.body.business,
         type,
         // negate - first one is string, flip it to false, then flip again for true
-        owner: !!req.body.owner,
+        isOwner: !!req.body.owner,
         img: req.body.img,
         img_description: req.body.img_description,
         owner: {
@@ -81,6 +119,9 @@ router.get("/new", isLoggedIn, (req, res, next) => {
 // Search
 router.get("/search", async (req, res) => {
     try {
+        const perPage = 1;
+        let page = req.params.page || 1;
+
         // has to be indexed for this to work on search
         // will only search text fields
         // get all comments matching the query
@@ -89,9 +130,18 @@ router.get("/search", async (req, res) => {
                 $search: req.query.term
             }
         });
+
+        const count = await Landlord.countDocuments({
+            $text: {
+                $search: req.query.term
+            }
+        });
         const comments = await Comment.find().exec();
         res.status(200).render("landlords", {
-            landlords, comments
+            landlords,
+            comments,
+            current: page,
+            pages: Math.ceil(count / perPage)
         });
     } catch (err) {
         console.log('Broken /search GET', err);
@@ -104,9 +154,23 @@ router.get("/type/:type", async (req, res, next) => {
     // check if type is valid
     const validTypes = ["apartments", "houses", "rooms"]; // if bigger application would pull this from a config file to edit easier
     if (validTypes.includes(req.params.type.toLocaleLowerCase())) {
-        const landlords = await Landlord.find({ type: req.params.type }).exec();
+        const perPage = 4;
+        let page = 1;
+
+        const landlords = await Landlord.find({ type: req.params.type })
+            .sort({ _id: 1 })
+            .skip(page > 0 ? ((page - 1) * perPage) : 0)
+            .limit(perPage)
+            .exec();
+        const count = await Landlord.countDocuments({ type: req.params.type });
         const comments = await Comment.find().exec();
-        res.status(200).render("landlords", { landlords, comments });
+        res.status(200).render("landlords", {
+            landlords,
+            comments,
+            type: req.params.type,
+            current: page,
+            pages: Math.ceil(count / perPage)
+        });
     } else {
         console.log('Broken.. /landlords/type GET Invalid type.');
         next();

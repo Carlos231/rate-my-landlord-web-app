@@ -19,13 +19,13 @@ router.post('/signup', async (req, res) => {
             username: req.body.username,
             email: req.body.email
         }), req.body.password);
-        console.log("New user:", newUser.username);
+        // console.log("New user:", newUser.username);
         req.flash("success", `Signed you up as "${newUser.username}"`);
         passport.authenticate('local')(req, res, () => {
             res.status(201).redirect('/landlords');
         });
     } catch (err) {
-        console.log("Broken.. /signup POST", err.message);
+        // console.log("Broken.. /signup POST", err.message);
         req.flash("error", `Error signing you up as "${req.body.username}". ${err.message}.`);
         res.status(400).redirect('/signup');
     }
