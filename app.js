@@ -11,6 +11,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const expressSession = require('express-session');
+const rateLimit = require("express-rate-limit");
 
 // Config Import
 require('dotenv').config();
@@ -58,6 +59,21 @@ try {
     console.log("Could not connect to DB");
     console.log(error);
 }
+
+// Prevent people from spamming the API
+// Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+// see https://expressjs.com/en/guide/behind-proxies.html
+app.set('trust proxy', 1);
+
+const limiter = rateLimit({
+    windowMs: 30 * 60 * 1000, // 15 minutes
+    max: 5, // start blocking after 5 requests
+    max: 20, // limit each IP to 20 requests per windowMs
+    message:
+        "You have reached your allowed requests for this IP, please try again after an hour"
+});
+
+app.use(limiter);
 
 // Express Config
 app.set('view engine', 'ejs');
