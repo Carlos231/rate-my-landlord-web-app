@@ -1,11 +1,8 @@
 <!-- PROJECT SHIELDS -->
 
-[![Build Status](https://travis-ci.com/Carlos231/rate-my-landlord-web-app.svg?branch=master)](https://travis-ci.com/Carlos231/rate-my-landlord-web-app)
-[![Contributors][contributors-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/graphs/contributors)
-[![Forks][forks-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/network/members)
-[![Stargazers][stars-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/stargazers)
-[![Issues][issues-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/issues)
-[![MIT License][license-shield]](https://github.com/Carlos231/rate-my-landlord-web-app/blob/master/LICENSE.txt)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Frate-my-landlords.herokuapp.com%2F)
+[![Travis CI w/ Logo](https://travis-ci.com/Carlos231/rate-my-landlord-web-app.svg?branch=master)](https://travis-ci.com/Carlos231/rate-my-landlord-web-app)
+[![Issues](https://img.shields.io/github/issues/Carlos231/rate-my-landlord-web-app.svg?branch=master)](https://github.com/Carlos231/rate-my-landlord-web-app/issues)
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/carlos-lopez-molina/)
 
 <!-- PROJECT LOGO -->
@@ -51,9 +48,9 @@
 
 ## About The Project
 
-Rate my Landlord is a resource I had been planning to build since living in my small college town. Most students usually arrive from out of their university area and do not have any insights into their potential landlords. When searching for a similar resource, two other applications appeared and they were not very user friendly. I am building this application to increase the skills and knowledge I have gained while working towards my Computer Science degree at Oregon State University and to practice continuous integration with features and improvements. I have the most experience working on the back-end of applications and have built the front end using Embedded JavaScript.
+Rate my Landlord is a resource I had been planning to build since living in my small college town. Most students usually arrive from out of their university area and do not have any insights into their potential landlords. When searching for a similar resource, two other applications appeared and they were not very user-friendly. I am building this application to increase the skills and knowledge I have gained while working towards my Computer Science degree at Oregon State University and to practice continuous integration of features and improvements. I have the most experience working on the back-end of applications and have built the front end using Embedded JavaScript and HTML.
 
-I am using this application to reinforce good coding practices and mimick to as close as possible professional settings. As I learn new features and technologies I am working on implementing them and continue to follow professional guides such as the Airbnb JavaScript Style Guide and the program development cycle. Some of my bigger plans include updating the front-end to React as I explore it and include features that users will find useful. Testing is being done through Postman.
+I am using this application to reinforce good coding practices and mimick to as close as possible professional settings. As I learn new features and technologies I am working on implementing them and continue to follow professional guides such as the Airbnb JavaScript Style Guide and the program development cycle. Some of my bigger plans include updating the front-end to React as I explore it and include features that users will find useful. Testing is being done through Postman and Js frameworks such as Mocha and Chai.
 
 ### Currently the features of this application include:
 
@@ -61,10 +58,12 @@ I am using this application to reinforce good coding practices and mimick to as 
 - RESTful API made with a non-relational database
 - CRUD functionalities
 - Search functionality
-- Templating using EJS
+- Templating using EJS with pagination
 - Location information using Google's Map API
 - UI demonstrates all functionalities
 - Continuous integration with Travis and Unit tested with Mocha and Chai frameworks
+- Rate limiting for all API calls
+- Website analytics through Umami.Js
 
 ### Features I am working on implementing:
 
@@ -72,6 +71,7 @@ I am using this application to reinforce good coding practices and mimick to as 
 - Add secure HTTPS
 - Add a landlords rating system
 - Complete mobile view
+- Add caching for view pages
 - See roadmap for more..
 
 The application is still a work in progress. If you have any suggestions feel free to contact me.
