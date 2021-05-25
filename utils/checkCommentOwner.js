@@ -1,9 +1,9 @@
-const Comment = require('../models/comment')
+const { getCommetsById } = require('../models/comment')
 
 const checkCommentOwner = async (req, res, next) => {
     if (req.isAuthenticated()) { // check if the user is logged in
         // get all comments
-        const comment = await Comment.findById(req.params.commentId).exec();
+        const comment = await getCommetsById(req.params.commentId);
         // check if both of these match
         // console.log(comment.owner.id);
         // console.log(req.user._id);

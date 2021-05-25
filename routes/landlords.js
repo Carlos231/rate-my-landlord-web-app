@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const Landlord = require('../models/landlord');
-const Comment = require('../models/comment');
+const { Landlord,
+    getLandlordsByPage,
+    getLandlordById,
+    deleteLandlord,
+    addLandlord,
+    updateLandlord
+} = require('../models/landlord');
+const { Comments, getComments } = require('../models/comment');
 
 const isLoggedIn = require('../utils/isLoggedIn');
 const checkLandlordOwner = require('../utils/checkLandlordOwner');
@@ -17,15 +23,8 @@ router.get("/", async (req, res) => {
     let page = 1;
 
     try {
-        const count = await Landlord.countDocuments({});
-        const landlords = await Landlord.find()
-            .sort({ _id: 1 })
-            .skip(page > 0 ? ((page - 1) * perPage) : 0)
-            .limit(perPage)
-            .exec();
-        const comments = await Comment.find().exec();
-        // pass in the user
-        // console.log("Pages:" + Math.ceil(count / perPage))
+        const [landlords, count] = await getLandlordsByPage(page, perPage);
+        const comments = await getComments();
         res.status(200).render('landlords', {
             landlords,
             comments,
@@ -46,13 +45,8 @@ router.get("/pages/:page", async (req, res) => {
     let page = req.params.page || 1;
 
     try {
-        const count = await Landlord.countDocuments({});
-        const landlords = await Landlord.find()
-            .sort({ _id: 1 })
-            .skip(page > 0 ? ((page - 1) * perPage) : 0)
-            .limit(perPage)
-            .exec();
-        const comments = await Comment.find().exec();
+        const [landlords, count] = await getLandlordsByPage(page, perPage);
+        const comments = await getComments();
         // pass in the user
         // console.log("Pages:" + Math.ceil(count / perPage))
         res.status(200).render('landlords', {
@@ -95,7 +89,7 @@ router.post("/", isLoggedIn, async (req, res) => {
 
     try {
         // redirect to new landlord created
-        const landlord = await Landlord.create(newLandlord);
+        const landlord = await addLandlord(newLandlord);
         // console.log(landlord);
         req.flash("success", "Landlord created!");
         res.status(201).redirect(`/landlords/${landlord._id}`);
@@ -125,18 +119,13 @@ router.get("/search", async (req, res) => {
         // has to be indexed for this to work on search
         // will only search text fields
         // get all comments matching the query
-        const landlords = await Landlord.find({
+        [landlords, count] = await getLandlordsByPage(page, perPage, {
             $text: {
                 $search: req.query.term
             }
         });
 
-        const count = await Landlord.countDocuments({
-            $text: {
-                $search: req.query.term
-            }
-        });
-        const comments = await Comment.find().exec();
+        const comments = await getComments();
         res.status(200).render("landlords", {
             landlords,
             comments,
@@ -157,13 +146,8 @@ router.get("/type/:type", async (req, res, next) => {
         const perPage = 4;
         let page = 1;
 
-        const landlords = await Landlord.find({ type: req.params.type })
-            .sort({ _id: 1 })
-            .skip(page > 0 ? ((page - 1) * perPage) : 0)
-            .limit(perPage)
-            .exec();
-        const count = await Landlord.countDocuments({ type: req.params.type });
-        const comments = await Comment.find().exec();
+        const [landlords, count] = await getLandlordsByPage(page, perPage, { type: req.params.type });
+        const comments = await getComments();
         res.status(200).render("landlords", {
             landlords,
             comments,
@@ -181,10 +165,10 @@ router.get("/type/:type", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
     try {
         // get all landlords
-        const landlord = await Landlord.findById(req.params.id).exec();
+        const landlord = await getLandlordById(req.params.id);
         // get all comments associated with landlord
         // queries on mongoose
-        const comments = await Comment.find({
+        const comments = await getComments({
             landlordId: req.params.id
         });
         // render page with landlord and comments
@@ -202,7 +186,7 @@ router.get("/:id", async (req, res, next) => {
 router.get("/:id/edit", checkLandlordOwner, async (req, res) => {
     try {
         // get all comments
-        const landlord = await Landlord.findById(req.params.id).exec();
+        const landlord = await getLandlordById(req.params.id);
         // if owner, render the form to edit
         res.status(200).render("landlords_edit", {
             landlord
@@ -230,10 +214,7 @@ router.put("/:id", checkLandlordOwner, async (req, res) => {
     }
 
     try {
-        const landlord = await Landlord.findByIdAndUpdate(req.params.id, landlordBody, {
-            // see object after is updates (3rd param)
-            new: true
-        }).exec();
+        const landlord = await updateLandlord(req.params.id, landlordBody);
         req.flash("success", "Landlord updated!");
         res.status(200).redirect(`/landlords/${req.params.id}`);
     } catch (err) {
@@ -246,7 +227,7 @@ router.put("/:id", checkLandlordOwner, async (req, res) => {
 // Delete
 router.delete("/:id", checkLandlordOwner, async (req, res) => {
     try {
-        const deletedLandlord = await Landlord.findByIdAndDelete(req.params.id).exec();
+        deleteLandlord(req.params.id);
         req.flash("success", "Landlord deleted!");
         res.status(200).redirect("/landlords");
     } catch (err) {

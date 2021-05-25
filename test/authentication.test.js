@@ -7,19 +7,37 @@ let chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 
-const User = require('../models/user');
+const { User, deleteUserAccount } = require('../models/user');
 
 /*
- * Test the /GET/landlords route
+ * Test Authentication
  */
-describe('Authentication routes', () => {
+describe('Authentication', () => {
+    /*
+    * Test helper functions
+    */
+    describe("#createNewUser", function () {
+        it("should create a new user and return it");
+
+        it("should not create a new user if a value is missing");
+
+    });
+
+    describe("#findUserById", function () {
+        it("should find a user by its Id");
+    });
+
+    describe("#deleteUserAccount", function () {
+        it("should find a user by their Id then delete them");
+    });
+
     /*
     * Test the /singup routes
     */
     describe("/signup routes", function () {
         let user;
 
-        it("it should GET sign up page", () => {
+        it("should GET sign up page", () => {
             request(app).get('/signup')
                 .then((res) => {
                     expect(res).to.not.be.empty;
@@ -76,7 +94,7 @@ describe('Authentication routes', () => {
     * Test the /login routes
     */
     describe("/login routes", function () {
-        it("it should GET login page", () => {
+        it("should GET login page", () => {
             request(app).get('/login')
                 .then((res) => {
                     expect(res).to.not.be.empty;
@@ -98,7 +116,7 @@ describe('Authentication routes', () => {
                 .end(done)
         });
 
-        it("it should GET logout page on logout success", () => {
+        it("should GET logout page on logout success", () => {
             request(app).get('/logout')
                 .then((res) => {
                     expect(res).to.not.be.empty;

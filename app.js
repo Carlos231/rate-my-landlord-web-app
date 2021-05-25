@@ -29,7 +29,7 @@ const accountRoutes = require('./routes/accounts');
 // Model Imports
 const Landlord = require('./models/landlord');
 const Comment = require('./models/comment');
-const User = require('./models/user');
+const { User, createNewUser } = require('./models/user');
 
 // =======================
 // DEVELOPMENT

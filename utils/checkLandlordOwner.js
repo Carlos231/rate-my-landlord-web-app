@@ -1,9 +1,9 @@
-const Landlord = require('../models/landlord')
+const { getLandlordById } = require('../models/landlord')
 
 const checkLandlordOwner = async (req, res, next) => {
     if (req.isAuthenticated()) { // check if the user is logged in
         // get all comments
-        const landlord = await Landlord.findById(req.params.id).exec();
+        const landlord = await getLandlordById(req.params.id);
         // check if both of these match
         // console.log(landlord.owner.id);
         // console.log(req.user._id);

@@ -5,6 +5,9 @@ const app = require("../app");
 
 const Comment = require('../models/comment');
 
+/*
+ * Test landing page
+ */
 describe('Landing routes', () => {
 
     /*

@@ -8,9 +8,38 @@ let chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 /*
- * Test the /GET/landlords route
+ * Test Landlords
  */
 describe('/landlords routes', () => {
+    /*
+    * Test helper functions
+    */
+    describe("#getLandlords", function () {
+        it("should retrieve all landlords");
+    });
+
+    describe("#getLandlordsByPage", function () {
+        it("should retrieve all landlords by page number");
+    });
+
+    describe("#getLandlordById", function () {
+        it("should retrieve landlords by Id");
+    });
+
+    describe("#deleteLandlord", function () {
+        it("should delete landlord by Id");
+    });
+    describe("#addLandlord", function () {
+        it("should add new landlord by Id");
+    });
+
+    describe("#updateLandlord", function () {
+        it("should update the landlord by Id");
+    });
+
+    /*
+    * Test landlord routes
+    */
     /*
     * Test the /GET/landlord/:id route
     */
@@ -25,6 +54,12 @@ describe('/landlords routes', () => {
                 .catch((err) => done(err))
         });
     });
+
+    // describe("Test", function () {
+    //     it("this is a test", (done) => {
+    //         done();
+    //     });
+    // });
 
     // Need to log in before so that sign in a user in order to do crud operations
 
