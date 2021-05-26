@@ -1,20 +1,20 @@
 const assert = require('assert');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const request = require('supertest');
-const app = require("../app");
+const app = require('../app');
 
 /*
  * Test Review
  */
-describe("Utils", () => {
+describe('Utils', () => {
     /*
     * Test helper functions
     */
-    describe("#checkCommentOwner", function () {
-        it("should only allow the owner to manipulate comment");
+    describe('#checkCommentOwner', () => {
+        it('should only allow the owner to manipulate comment');
     });
 
-    describe("#checkLandlordOwner", function () {
-        it("should only allow the owner to manipulate landlord");
+    describe('#checkLandlordOwner', () => {
+        it('should only allow the owner to manipulate landlord');
     });
-})
+});

@@ -1,40 +1,39 @@
 const assert = require('assert');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const request = require('supertest');
-const app = require("../app");
+const app = require('../app');
 
 const Comment = require('../models/comment');
 
 /*
  * Test Review
  */
-describe("Reviews", () => {
+describe('Reviews', () => {
     /*
     * Test helper functions
     */
-    describe("#getComments", function () {
-        it("should return all of the comments");
+    describe('#getComments', () => {
+        it('should return all of the comments');
     });
 
-    describe("#getCommetsById", function () {
-        it("should return the comment by Id");
+    describe('#getCommetsById', () => {
+        it('should return the comment by Id');
     });
 
-    describe("#addComment", function () {
-        it("should add a new comment to landlord");
+    describe('#addComment', () => {
+        it('should add a new comment to landlord');
     });
 
-    describe("#updateComment", function () {
-        it("should update the comment by Id");
+    describe('#updateComment', () => {
+        it('should update the comment by Id');
     });
 
-    describe("#deleteComment", function () {
-        it("should delete the comment by Id");
+    describe('#deleteComment', () => {
+        it('should delete the comment by Id');
     });
-})
+});
 
 // describe('Reviews routes', () => {
-
 
 //     describe("POST: /review", function () {
 //         const comment = new Comment({

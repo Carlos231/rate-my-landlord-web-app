@@ -1,9 +1,9 @@
 const assert = require('assert');
 const chai = require('chai');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const request = require('supertest');
-const app = require("../app");
-let chaiHttp = require('chai-http');
+const chaiHttp = require('chai-http');
+const app = require('../app');
 
 chai.use(chaiHttp);
 
@@ -14,27 +14,27 @@ describe('/landlords routes', () => {
     /*
     * Test helper functions
     */
-    describe("#getLandlords", function () {
-        it("should retrieve all landlords");
+    describe('#getLandlords', () => {
+        it('should retrieve all landlords');
     });
 
-    describe("#getLandlordsByPage", function () {
-        it("should retrieve all landlords by page number");
+    describe('#getLandlordsByPage', () => {
+        it('should retrieve all landlords by page number');
     });
 
-    describe("#getLandlordById", function () {
-        it("should retrieve landlords by Id");
+    describe('#getLandlordById', () => {
+        it('should retrieve landlords by Id');
     });
 
-    describe("#deleteLandlord", function () {
-        it("should delete landlord by Id");
+    describe('#deleteLandlord', () => {
+        it('should delete landlord by Id');
     });
-    describe("#addLandlord", function () {
-        it("should add new landlord by Id");
+    describe('#addLandlord', () => {
+        it('should add new landlord by Id');
     });
 
-    describe("#updateLandlord", function () {
-        it("should update the landlord by Id");
+    describe('#updateLandlord', () => {
+        it('should update the landlord by Id');
     });
 
     /*
@@ -43,15 +43,15 @@ describe('/landlords routes', () => {
     /*
     * Test the /GET/landlord/:id route
     */
-    describe("GET: /landlords", function () {
-        it("should GET all the landlords", () => {
+    describe('GET: /landlords', () => {
+        it('should GET all the landlords', () => {
             request(app).get('/landlords')
                 .then((res) => {
                     expect(res).to.not.be.empty;
                     expect(res.statusCode).to.equal(200);
-                    done()
+                    done();
                 })
-                .catch((err) => done(err))
+                .catch((err) => done(err));
         });
     });
 
@@ -112,20 +112,18 @@ describe('/landlords routes', () => {
     /*
     * Test the /GET/landlord/new route
     */
-    describe("GET: /search landlords", function () {
-        it("should GET the search results", (done) => {
-            const searchTerm = "em";
+    describe('GET: /search landlords', () => {
+        it('should GET the search results', (done) => {
+            const searchTerm = 'em';
             request(app).get(`/landlords/search?term=${searchTerm}`)
                 .then((res) => {
                     expect(res).to.not.be.empty;
                     expect(res.statusCode).to.equal(200);
                     expect(res).to.have.header('content-type', 'text/html; charset=utf-8');
                     expect(res.text).to.contain('Emily Heart');
-                    done()
+                    done();
                 })
-                .catch((err) => done(err))
-        })
-    })
-
+                .catch((err) => done(err));
+        });
+    });
 });
-

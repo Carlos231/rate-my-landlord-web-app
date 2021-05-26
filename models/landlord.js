@@ -14,32 +14,32 @@ const landlordSchema = new mongoose.Schema({
         // establish relationship
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: 'User',
         },
-        username: String
+        username: String,
     },
     reviews: [{
         name: {
-            type: String
+            type: String,
         },
         content: {
-            type: String
-        }
-    }]
-})
-
-landlordSchema.index({
-    '$**': 'text'
+            type: String,
+        },
+    }],
 });
 
-const Landlord = mongoose.model("landlord", landlordSchema);
+landlordSchema.index({
+    '$**': 'text',
+});
+
+const Landlord = mongoose.model('landlord', landlordSchema);
 
 async function getLandlords() {
     try {
         const landlords = await Landlord.find().exec();
         return landlords;
     } catch (error) {
-        throw new Error("Error finding all landlords. More info: ", error);
+        throw new Error('Error finding all landlords. More info: ', error);
     }
 }
 
@@ -57,7 +57,7 @@ async function getLandlordsByPage(page, perPage, filter = {}) {
             .exec();
         return [landlords, count];
     } catch (error) {
-        throw new Error("Error retrieving landlords by page. More info: ", error);
+        throw new Error('Error retrieving landlords by page. More info: ', error);
     }
 }
 
@@ -66,15 +66,15 @@ async function getLandlordById(id) {
         const landlord = await Landlord.findById(id).exec();
         return landlord;
     } catch (error) {
-        throw new Error("Error retrieving landlord by id. More info: ", error);
+        throw new Error('Error retrieving landlord by id. More info: ', error);
     }
 }
 
 async function deleteLandlord(id) {
     try {
-        const deletedLandlord = await Landlord.findByIdAndDelete(id).exec();
+        await Landlord.findByIdAndDelete(id).exec();
     } catch (error) {
-        throw new Error("Error deleting landlord. More info:", error);
+        throw new Error('Error deleting landlord. More info:', error);
     }
 }
 
@@ -83,18 +83,18 @@ async function addLandlord(newLandlord) {
         const landlord = await Landlord.create(newLandlord);
         return landlord;
     } catch (error) {
-        throw new Error("Error adding a new landlord. More info:", error)
+        throw new Error('Error adding a new landlord. More info:', error);
     }
 }
 
 async function updateLandlord(id, updatedData) {
     try {
-        const landlord = await Landlord.findByIdAndUpdate(id, updatedData, {
+        await Landlord.findByIdAndUpdate(id, updatedData, {
             // see object after is updates (3rd param)
-            new: true
+            new: true,
         }).exec();
     } catch (error) {
-        throw new Error("Error updating landlord. More info: ", error);
+        throw new Error('Error updating landlord. More info: ', error);
     }
 }
 
@@ -105,5 +105,5 @@ module.exports = {
     getLandlordById,
     deleteLandlord,
     addLandlord,
-    updateLandlord
+    updateLandlord,
 };

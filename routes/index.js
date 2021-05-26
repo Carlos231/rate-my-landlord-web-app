@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const { getLandlords } = require('../models/landlord');
@@ -7,13 +8,13 @@ const { getLandlords } = require('../models/landlord');
 const KEY = process.env.MAPSAPI;
 
 // index
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const landlords = await getLandlords();
 
         res.status(200).render('landing', {
-            landlords: landlords,
-            KEY: KEY
+            landlords,
+            KEY,
         });
     } catch (err) {
         console.log('Broken.. /index GET');
