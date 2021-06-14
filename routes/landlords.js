@@ -209,9 +209,13 @@ router.put('/:id', checkLandlordOwner, async (req, res) => {
         address: req.body.address,
         business: req.body.business,
         type,
-        owner: !!req.body.owner,
+        isOwner: !!req.body.owner,
         img: req.body.img,
         img_description: req.body.img_description,
+        owner: {
+            id: req.user._id,
+            username: req.user.username,
+        },
     };
 
     try {
