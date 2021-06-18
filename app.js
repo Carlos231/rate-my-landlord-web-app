@@ -2,7 +2,6 @@
 // IMPORTS
 // =======================
 const express = require('express');
-
 const app = express();
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
@@ -12,7 +11,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const expressSession = require('express-session');
-const rateLimit = require('express-rate-limit');
+const rateLimit = require("express-rate-limit");
 
 // Config Import
 require('dotenv').config();
@@ -30,7 +29,7 @@ const accountRoutes = require('./routes/accounts');
 // Model Imports
 const Landlord = require('./models/landlord');
 const Comment = require('./models/comment');
-const { User, createNewUser } = require('./models/user');
+const User = require('./models/user');
 
 // =======================
 // DEVELOPMENT
@@ -45,7 +44,7 @@ const { User, createNewUser } = require('./models/user');
 // =======================
 // Body Parser Config
 app.use(bodyParser.urlencoded({
-    extended: true,
+    extended: true
 }));
 
 // Mongoose Config Connect to DB
@@ -54,10 +53,10 @@ try {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
-        useFindAndModify: false,
+        useFindAndModify: false
     });
 } catch (error) {
-    console.log('Could not connect to DB');
+    console.log("Could not connect to DB");
     console.log(error);
 }
 
@@ -68,9 +67,9 @@ app.set('trust proxy', 1);
 
 const limiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 60 minutes
-    max: 75, // limit each IP to 30 requests per windowMs
+    max: 20, // limit each IP to 20 requests per windowMs
     message:
-        'You have reached your allowed requests for this IP, please try again after an hour',
+        "You have reached your allowed requests for this IP, please try again after an hour"
 });
 
 app.use(limiter);
@@ -83,7 +82,7 @@ app.use(express.static('public'));
 app.use(expressSession({
     secret: process.env.ES_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: false
 }));
 
 // Method Override Config
@@ -104,8 +103,8 @@ app.use((req, res, next) => {
     // value on response object we can add key value pairs to
     // will make it available to all routes
     res.locals.user = req.user;
-    res.locals.errorMessage = req.flash('error');
-    res.locals.successMessage = req.flash('success');
+    res.locals.errorMessage = req.flash("error");
+    res.locals.successMessage = req.flash("success");
     next();
 });
 
@@ -118,8 +117,8 @@ app.use('/landlords/:id/comments', commentRoutes);
 // app.use('/reviews', reviewRoutes);
 
 // Error page
-app.use('*', (req, res) => {
-    res.status(404).render('error', { error: `Requested resource ${req.originalUrl} does not exist` });
+app.use('*', function (req, res, next) {
+    res.status(404).render('error', { 'error': "Requested resource " + req.originalUrl + " does not exist" });
 });
 
 // =======================
@@ -130,4 +129,4 @@ const server = app.listen(PORT, () => {
 });
 
 // Export our app for testing purposes
-module.exports = server;
+module.exports = server
