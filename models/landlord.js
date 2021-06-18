@@ -89,10 +89,11 @@ async function addLandlord(newLandlord) {
 
 async function updateLandlord(id, updatedData) {
     try {
-        await Landlord.findByIdAndUpdate(id, updatedData, {
+        const updatedLandlord = await Landlord.findByIdAndUpdate(id, updatedData, {
             // see object after is updates (3rd param)
             new: true,
         }).exec();
+        return updatedLandlord;
     } catch (error) {
         throw new Error('Error updating landlord. More info: ', error);
     }

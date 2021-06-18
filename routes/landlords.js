@@ -20,7 +20,7 @@ const KEY = process.env.MAPSAPI;
 // index - get everything
 router.get('/', async (req, res) => {
     // console.log(req.user);
-    const perPage = 1;
+    const perPage = 2;
     const page = 1;
 
     try {
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
 // get index pages
 router.get('/pages/:page', async (req, res) => {
     // console.log(req.user);
-    const perPage = 1;
+    const perPage = 2;
     const page = req.params.page || 1;
 
     try {
@@ -147,6 +147,7 @@ router.get('/type/:type', async (req, res, next) => {
         const perPage = 4;
         const page = 1;
 
+        // eslint-disable-next-line max-len
         const [landlords, count] = await getLandlordsByPage(page, perPage, { type: req.params.type });
         const comments = await getComments();
         res.status(200).render('landlords', {

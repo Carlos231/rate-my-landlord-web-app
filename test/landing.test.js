@@ -8,7 +8,7 @@ const Comment = require('../models/comment');
 /*
  * Test landing page
  */
-describe('Landing routes', () => {
+describe('Landing', () => {
     /*
     * Test the /GET/ landing page route
     */

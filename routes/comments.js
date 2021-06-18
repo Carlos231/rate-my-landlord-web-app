@@ -5,7 +5,7 @@ const router = express.Router({
 });
 
 const {
-    getCommetsById,
+    getCommentsById,
     addComment,
     updateComment,
     deleteComment,
@@ -56,7 +56,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 // EDIT
 router.get('/:commentId/edit', checkCommentOwner, async (req, res) => {
     try {
-        const comment = await getCommetsById(req.params.commentId);
+        const comment = await getCommentsById(req.params.commentId);
         // avoid qurerying twice:
         res.status(200).render('comments_edit', {
             // landlord,

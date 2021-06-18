@@ -18,6 +18,7 @@ const commentSchema = new mongoose.Schema({
 
 const Comment = mongoose.model('comment', commentSchema);
 
+// returns an array of objects
 async function getComments(landlordsId = {}) {
     try {
         const comments = await Comment.find(landlordsId).exec();
@@ -27,7 +28,7 @@ async function getComments(landlordsId = {}) {
     }
 }
 
-async function getCommetsById(id) {
+async function getCommentsById(id) {
     try {
         const comments = await Comment.findById(id).exec();
         return comments;
@@ -38,7 +39,8 @@ async function getCommetsById(id) {
 
 async function addComment(commentBody) {
     try {
-        await Comment.create(commentBody);
+        const newComment = await Comment.create(commentBody);
+        return newComment;
     } catch (error) {
         throw new Error('Error adding a new comment. More info:', error);
     }
@@ -46,9 +48,10 @@ async function addComment(commentBody) {
 
 async function updateComment(commentId, updatedBody) {
     try {
-        await Comment.findByIdAndUpdate(commentId, updatedBody, {
+        const updatedComment = await Comment.findByIdAndUpdate(commentId, updatedBody, {
             new: true,
         });
+        return updatedComment;
     } catch (error) {
         throw new Error('Error updating comment. More info: ', error);
     }
@@ -65,7 +68,7 @@ async function deleteComment(commentId) {
 module.exports = {
     Comment,
     getComments,
-    getCommetsById,
+    getCommentsById,
     addComment,
     updateComment,
     deleteComment,

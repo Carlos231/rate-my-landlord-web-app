@@ -68,7 +68,7 @@ app.set('trust proxy', 1);
 
 const limiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 60 minutes
-    max: 30, // limit each IP to 30 requests per windowMs
+    max: 75, // limit each IP to 30 requests per windowMs
     message:
         'You have reached your allowed requests for this IP, please try again after an hour',
 });

@@ -6,8 +6,9 @@ const chaiHttp = require('chai-http');
 const app = require('../app');
 
 chai.use(chaiHttp);
+chai.use(require('chai-as-promised'));
 
-const { User, deleteUserAccount } = require('../models/user');
+const { User, createNewUser } = require('../models/user');
 
 /*
  * Test Authentication
@@ -17,17 +18,18 @@ describe('Authentication', () => {
     * Test helper functions
     */
     describe('#createNewUser', () => {
-        it('should create a new user and return it');
+        it('should create a new user and return it', async () => {
+            const newUser = await createNewUser('testuser', 'user@test.com', 'testPassword');
 
-        it('should not create a new user if a value is missing');
-    });
+            chai.assert.isDefined(newUser);
+            chai.assert.isObject(newUser);
+            chai.assert.propertyVal(newUser, 'username', 'testuser');
+            chai.assert.propertyVal(newUser, 'email', 'user@test.com');
+        });
 
-    describe('#findUserById', () => {
-        it('should find a user by its Id');
-    });
-
-    describe('#deleteUserAccount', () => {
-        it('should find a user by their Id then delete them');
+        it('should throw an Error if value is missing from new user', async () => {
+            await chai.expect(createNewUser('testuser', 'user@test.com')).to.be.rejectedWith(Error);
+        });
     });
 
     /*
@@ -53,9 +55,9 @@ describe('Authentication', () => {
                 .post('/signup')
                 .type('form')
                 .send({
-                    username: 'test',
-                    email: 'test@gmail.com',
-                    password: 'dev',
+                    username: 'testuser',
+                    email: 'user@test.com',
+                    password: 'testPassword',
                 })
                 .end((err, res) => {
                     user = res.body;
@@ -80,8 +82,8 @@ describe('Authentication', () => {
         });
 
         it('removes the test user', (done) => {
-            User.findOneAndRemove({ username: 'test' })
-                .then(() => User.findOne({ username: 'test' }))
+            User.findOneAndRemove({ username: 'testuser' })
+                .then(() => User.findOne({ username: 'testuser' }))
                 .then((user) => {
                     assert(user === null);
                     done();
